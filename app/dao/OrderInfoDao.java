@@ -22,5 +22,5 @@ public interface OrderInfoDao {
 
     public int num();
 
-    public boolean isExist(OrderInfo orderInfo);
+    public boolean isExist(OrderInfo orderInfo,boolean updFlag);
 }

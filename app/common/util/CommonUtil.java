@@ -4,11 +4,11 @@ import common.MsgCode;
 import common.Severity;
 import common.exceptions.BusinessRuntimeException;
 import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 
-import java.text.DateFormat;
 import java.text.MessageFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -73,29 +73,31 @@ public class CommonUtil {
 
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
-    private static final DateFormat DATE_FORMAT = new SimpleDateFormat(DATE_FORMAT_SHORT);
+    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern(DATE_FORMAT_SHORT);
 
-    public static synchronized String dateToString(Date date, String... format) {
+    public static  String dateToString(Date date, String... format) {
         if (date == null) {
             return "";
         }
-
+        DateTime dateTime = new DateTime(date);
         if (format != null && format.length > 0) {
-            return new SimpleDateFormat(format[0]).format(date);
+            return dateTime.toString(format[0]);
         } else {
-            return DATE_FORMAT.format(date);
+            return dateTime.toString(DATE_FORMAT_SHORT);
         }
     }
 
-    public static synchronized Date stringToDate(String dateString, String... format) throws ParseException {
+    public static Date stringToDate(String dateString, String... format) {
         if (StringUtils.isEmpty(dateString)) {
-            return new Date();
+            return new DateTime().toDate();
         }
 
         if (format != null && format.length > 0) {
-            return new SimpleDateFormat(format[0]).parse(dateString);
+            DateTimeFormatter dateFormat = DateTimeFormat.forPattern(format[0]);
+            DateTime dateTime = DateTime.parse(dateString, dateFormat);
+            return dateTime.toDate();
         } else {
-            return DATE_FORMAT.parse(dateString);
+            return DateTime.parse(dateString, DATE_FORMAT).toDate();
         }
     }
 

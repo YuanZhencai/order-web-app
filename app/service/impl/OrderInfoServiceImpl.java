@@ -47,12 +47,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     public Long add(OrderInfoVo orderInfoVo) throws Exception {
         OrderInfo orderInfo = new OrderInfo();
         BeanUtils.copyProperties(orderInfo,orderInfoVo);
-        if(dao.isExist(orderInfo)){
-            throw new Exception("订单已存在");
-        }
+        orderInfo.setCreateTime(new DateTime().toDate());
+        dao.isExist(orderInfo,true);
         orderInfo.setDelFlg("N");
         orderInfo.setCreateBy("sunlights");
-        orderInfo.setCreateTime(new DateTime().toDate());
         orderInfo.setUpdateBy("sunlights");
         orderInfo.setUpdateTime(new DateTime().toDate());
         Long id = dao.doInsert(orderInfo);
