@@ -7,10 +7,10 @@
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <non-jta-data-source>DefaultDS</non-jta-data-source>
         <properties>
-            <property name="hibernate.connection.url" value="jdbc:postgresql://localhost:5432/template1"/>
+            <property name="hibernate.connection.url" value="jdbc:postgresql://192.168.0.95:5432/sunlightsdev"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
-            <property name="hibernate.connection.username" value="postgres"/>
-            <property name="hibernate.connection.password" value="xuelong007"/>
+            <property name="hibernate.connection.username" value="sunlights"/>
+            <property name="hibernate.connection.password" value="sunlights"/>
         </properties>
     </persistence-unit>
 
