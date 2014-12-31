@@ -1,0 +1,437 @@
+@(message: String)
+<!doctype html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <base href="../">
+        <title>Operation Platform</title>
+        <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/style.css")'>
+
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap-theme.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("ng-grid.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("jquery-ui.css"))'>
+    </head>
+    <body class="index_page">
+        <body class="index_page">
+            <div style=" clear : both"></div>
+            <div style="height : 83 px ; width : 100 % ;" class="clearfix">
+                <div class="block header">
+                    <div class="logo"> </div>
+                    <div class="header-search">
+                        <script type="text/javascript">
+
+                        <!--
+                        function checkSearchForm ( ) {
+                        if ( document.getElementById ( 'keyword' ).value ) {
+                        return true ;
+                        }
+                        else {
+                        alert ( "请输入搜索关键词！" ) ;
+                        return false ;
+                        }
+                        }
+                        -->
+
+                        </script>
+                        <form align="right" id="searchForm" name="searchForm" method="get" action="search.php" onsubmit="checkSearchForm ( )">
+                            <div class="searchleft"> </div>
+                            <div class="key">
+                                <input name="keywords" type="text" id="keyword" value="" class="search-input">
+                            </div>
+                            <div class="btn_search">
+                                <input value="" id="seachbtn" type="submit">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div style="clear : both"></div>
+            <div class="menu_nav">
+                <div id="topchannel" class="nav">
+                    <ul>
+                        <li class="lichannel"><a href="index.php">首页</a></li>
+                        <li class="lichannel"><a href="category.php?id=789">白领套餐</a></li>
+                        <li class="lichannel"><a href="category.php?id=810">特色套餐</a></li>
+                        <li class="lichannel"><a href="category.php?id=817">经典套餐</a></li>
+                        <li class="lichannel"><a href="category.php?id=838">特制套餐</a></li>
+                        <li class="lichannel"><a href="category.php?id=852">组合套餐</a></li>
+                    </ul>
+                </div>
+                <div class="block">
+                    <div class="container" id="idTransformView">
+                        <ul class="slider" id="idSlider" style="position : absolute ; left : 0px; top : -1572.8px;">
+                            <li><a href="" target="_blank"><img src="assets/images/1.jpg"></a></li>
+                            <li><a href="" target="_blank"><img src="assets/images/2.jpg"></a></li>
+                            <li><a href="" target="_blank"><img src="assets/images/3.jpg"></a></li>
+                            <li><a href="" target="_blank"><img src="assets/images/4.jpg"></a></li>
+                            <li><a href="" target="_blank"><img src="assets/images/5.jpg"></a></li>
+                        </ul>
+                        <ul class="num" id="idNum">
+                            <li class="">
+                                1    </li>
+                            <li class="">
+                                2    </li>
+                            <li class="">
+                                3    </li>
+                            <li class="">
+                                4    </li>
+                            <li class="on">
+                                5    </li>
+                        </ul>
+                    </div>
+                    <div class="blank5"></div>
+                    <div class="blank"></div></div>
+                <div class="block clearfix" ng-controller="OrderCtrl as mc" ng-init="mc.findResult()">
+                    <div>
+                        <div class="sale_box clearfix">
+                            <div class="tit"><span>套餐类</span></div>
+                            <div class="clearfix">
+                                <ul class="clearfix" ng-repeat="result in results">
+                                    <li class="goodsimg"><a href="" ng-click="addRow(result)"><img src="" border="0" alt="{{result.foodName}}" class="B_blue"></a></li>
+                                    <li> <p><a href="" ng-click="addRow(result)" title="{{result.foodName}}">
+                                        {{result.foodName}}</a></p>
+                                        价格：<font class="f1">{{result.priceStr}}元</font></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="blank"></div>
+                    </div>
+                    <script type="text/ng-template" id="OrderModalContent.html" controller="OrderModalCtrl">
+                    <form role="form" ng-submit="update()">
+                        <table>
+                            <tbody>
+                            <div class="modal-body">
+                            <tr>
+                            <td>
+                            <label class="control-label">菜名:</label>
+                            </td>
+                            <td>
+                            <label class="control-label">{{order.foodName}}</label>
+                            </td>
+                            <input class="form-control" type="hidden" name="foodName" required
+                            ng-model="order.foodName">
+                            <td>
+                            <label class="control-label">来源:</label>
+                            </td>
+                            <td>
+                            <label class="control-label">{{order.source}}</label>
+                            </td>
+                            <input class="form-control" type="hidden" name="source" required
+                            ng-model="order.source">
+                            </tr>
+                            <tr>
+                            <td>
+                            <label class="control-label">价格:</label>
+                            </td>
+                            <td>
+                            <label class="control-label">{{order.priceStr}}</label>
+                            </td>
+                            <input class="form-control" type="hidden" name="price" required
+                            ng-model="order.priceStr">
+                            </tr>
+                            <tr>
+                            <td>
+                            <label class="control-label">姓名:</label>
+                            </td>
+                            <td>
+                            <input class="form-control" type="text" name="price" required
+                            ng-model="order.userName">
+                            </td>
+
+                            </tr>
+                            <tr>
+                            <td colspan="4" align="right">
+                            <button type="submit" class="btn btn-success">确定</button>
+                            <a ng-click="cancel()" class="btn btn-warning">取消</a>
+                            </td>
+                            </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </form>
+                    </script>
+                    <div class="blank"></div>
+                    <div class="goodsBox_1">
+                        <div class="xm-box">
+                            <h4 class="title"><span>汤类</span> <a class="more" href="category.php?id=763">更多</a></h4>
+                            <div class="blank"></div>
+                            <div id="show_hot_area" class="clearfix">
+                                <div class="goodsItem">
+                                    <a href="goods.php?id=217"><img src="" alt="紫菜蛋汤" class="goodsimg"></a><br>
+                                    <p class="f1"><a href="goods.php?id=217" title="紫菜蛋汤"></a></p>
+                                    市场价：<font class="market">10元</font> <br>
+                                    本店价：<font class="f1">
+                                    10元                     </font>
+                                </div>
+                                <div class="goodsItem">
+                                    <a href="goods.php?id=216"><img src="" alt="榨菜蛋汤" class="goodsimg"></a><br>
+                                    <p class="f1"><a href="goods.php?id=216" title="榨菜蛋汤"></a></p>
+                                    市场价：<font class="market">10元</font> <br>
+                                    本店价：<font class="f1">
+                                    10元                     </font>
+                                </div>
+                                <div class="goodsItem">
+                                    <a href="goods.php?id=217"><img src="" alt="紫菜蛋汤" class="goodsimg"></a><br>
+                                    <p class="f1"><a href="goods.php?id=217" title="西红柿蛋汤"></a></p>
+                                    市场价：<font class="market">10元</font> <br>
+                                    本店价：<font class="f1">
+                                    10元                     </font>
+                                </div>
+                                <div class="goodsItem">
+                                    <a href="goods.php?id=216"><img src="" alt="榨菜蛋汤" class="goodsimg"></a><br>
+                                    <p class="f1"><a href="goods.php?id=216" title="香菇酸汤"></a></p>
+                                    市场价：<font class="market">12元</font> <br>
+                                    本店价：<font class="f1">
+                                    12元                     </font>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="foot_add">
+                    </div>
+                </div>
+
+                <div class="footer" style="margin-top : 30 px;">
+                    <div class="footer-menu clearfix">
+                        <dl>
+                            <dt><a href="article_cat.php?id=5" title="新手上路 ">新手上路 </a></dt>
+                            <dd><a href="article.php?id=9" title="售后流程">售后流程</a></dd>
+                            <dd><a href="article.php?id=10" title="购物流程">购物流程</a></dd>
+                            <dd><a href="article.php?id=11" title="订购方式">订购方式</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="article_cat.php?id=6" title="购物常识 ">购物常识 </a></dt>
+                            <dd><a href="article.php?id=12" title="如何分辨原装电池">如何分辨原装电池</a></dd>
+                            <dd><a href="article.php?id=13" title="如何分辨水货手机 ">如何分辨水货手机</a></dd>
+                            <dd><a href="article.php?id=14" title="如何享受全国联保">如何享受全国联保</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="article_cat.php?id=7" title="配送与支付 ">配送与支付 </a></dt>
+                            <dd><a href="article.php?id=15" title="货到付款区域">货到付款区域</a></dd>
+                            <dd><a href="article.php?id=16" title="配送支付智能查询 ">配送支付智能查询</a></dd>
+                            <dd><a href="article.php?id=17" title="支付方式说明">支付方式说明</a></dd>
+
+                        </dl>
+                        <dl>
+                            <dt><a href="article_cat.php?id=10" title="会员中心">会员中心</a></dt>
+                            <dd><a href="article.php?id=18" title="资金管理">资金管理</a></dd>
+                            <dd><a href="article.php?id=19" title="我的收藏">我的收藏</a></dd>
+                            <dd><a href="article.php?id=20" title="我的订单">我的订单</a></dd>
+                        </dl>
+                        <dl>
+                            <dt><a href="article_cat.php?id=8" title="服务保证 ">服务保证 </a></dt>
+                            <dd><a href="article.php?id=21" title="退换货原则">退换货原则</a></dd>
+                            <dd><a href="article.php?id=22" title="售后服务保证 ">售后服务保证</a></dd>
+                            <dd><a href="article.php?id=23" title="产品质量保证 ">产品质量保证</a></dd>
+                        </dl>
+                        <div class="tel-us"> <a class="online-link" href="javascript:void(0);">在线客服</a> </div>
+                    </div>
+                    <div class="copyright">
+                        共执行 4 个查询，用时 0.009699 秒，在线 33 人，Gzip 已禁用，占用内存 4.117 MB<img src="" alt="" style="width : 0 px ; height : 0 px ;"><br>
+                        <a href="" target="_blank" style=" font-family : Verdana ; font-size : 11 px ;">
+                            Powered&nbsp;by&nbsp;<strong><span style="color : #3366FF">
+                            ECShop</span>&nbsp;<span style="color : #FF9966">v2.7.3</span></strong></a>&nbsp;<br>
+                        <div align="center" style=" margin : 15 px"><a href="" target="_blank"><img src="" alt="ECShop模板"></a></div>
+                    </div>
+                </div>
+            </div>
+        </body>
+    </body>
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery.min.js"))"></script>
+    <script src="@routes.WebJarAssets.at(WebJarAssets.locate("jquery-ui.min.js"))"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("angular.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("ng-grid.min.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("ui-bootstrap.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("ui-bootstrap-tpls.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("angular-ui-router.min.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("date.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("angular-route.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("angular-file-upload.js"))' type="text/javascript"></script>
+    <script src='@routes.WebJarAssets.at(WebJarAssets.locate("js/bootstrap.js"))' type="text/javascript"></script>
+
+    <script src='@routes.Assets.at("javascripts/app.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/common/Config.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/common/datepicker_zhCN.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/common/uploadForExcel.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/common/PageService.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/common/core.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/directives/AppVersion.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/directives/NgEnter.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/directives/goBackButton.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/directives/NgPageChanged.js")' type="text/javascript"></script>
+
+
+    <script src='@routes.Assets.at("javascripts/app.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/order/orderCtrl.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/order/orderService.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/order/orderModalCtrl.js")' type="text/javascript"></script>
+
+    <script type="text/javascript">
+    var $ = function ( id ) {
+    return "string" == typeof id ? document.getElementById ( id ) : id ;
+    } ;
+    var Class = {
+    create : function ( ) {
+    return function ( ) {
+    this.initialize.apply ( this, arguments ) ;
+    }
+    }
+    }
+    Object.extend = function ( destination, source ) {
+    for ( var property in source ) {
+    destination[ property ] = source[ property ] ;
+    }
+    return destination ;
+    }
+    var TransformView = Class.create ( ) ;
+    TransformView.prototype = {
+    //容器对象,滑动对象,切换参数,切换数量
+    initialize : function ( container, slider, parameter, count, options ) {
+    if ( parameter <= 0 || count <= 0 ) return ;
+    var oContainer = $ ( container ), oSlider = $ ( slider ), oThis = this ;
+    this.Index = 0 ; //当前索引
+
+    this._timer = null ; //定时器
+    this._slider = oSlider ; //滑动对象
+    this._parameter = parameter ; //切换参数
+    this._count = count || 0 ; //切换数量
+    this._target = 0 ; //目标参数
+
+    this.SetOptions ( options ) ;
+
+    this.Up = ! ! this.options.Up ;
+    this.Step = Math.abs ( this.options.Step ) ;
+    this.Time = Math.abs ( this.options.Time ) ;
+    this.Auto = ! ! this.options.Auto ;
+    this.Pause = Math.abs ( this.options.Pause ) ;
+    this.onStart = this.options.onStart ;
+    this.onFinish = this.options.onFinish ;
+
+    oContainer.style.overflow = "hidden" ;
+    oContainer.style.position = "relative" ;
+
+    oSlider.style.position = "absolute" ;
+    oSlider.style.top = oSlider.style.left = 0 ;
+    },
+    //设置默认属性
+    SetOptions : function ( options ) {
+    this.options = { //默认值
+    Up : true, //是否向上(否则向左)
+    Step : 5, //滑动变化率
+    Time : 10, //滑动延时
+    Auto : true, //是否自动转换
+    Pause : 2000, //停顿时间(Auto为true时有效)
+    onStart : function ( ) { }, //开始转换时执行
+    onFinish : function ( ) { } //完成转换时执行
+    } ;
+    Object.extend ( this.options, options || { } ) ;
+    },
+    //开始切换设置
+    Start : function ( ) {
+    if ( this.Index < 0 ) {
+    this.Index = this._count - 1 ;
+    } else if ( this.Index >= this._count ) { this.Index = 0 ; }
+
+    this._target = - 1 * this._parameter * this.Index ;
+    this.onStart ( ) ;
+    this.Move ( ) ;
+    },
+    //移动
+    Move : function ( ) {
+    clearTimeout ( this._timer ) ;
+    var oThis = this, style = this.Up ? "top" : "left", iNow = parseInt ( this._slider.style[ style ] ) || 0, iStep = this.GetStep ( this._target, iNow ) ;
+
+    if ( iStep != 0 ) {
+    this._slider.style[ style ] = ( iNow + iStep ) + "px" ;
+    this._timer = setTimeout ( function ( ) { oThis.Move ( ) ; }, this.Time ) ;
+    } else {
+    this._slider.style[ style ] = this._target + "px" ;
+    this.onFinish ( ) ;
+    if ( this.Auto ) { this._timer = setTimeout ( function ( ) { oThis.Index ++ ; oThis.Start ( ) ; }, this.Pause ) ; }
+    }
+    },
+    //获取步长
+    GetStep : function ( iTarget, iNow ) {
+    var iStep = ( iTarget - iNow ) / this.Step ;
+    if ( iStep == 0 ) return 0 ;
+    if ( Math.abs ( iStep ) < 1 ) return ( iStep > 0 ? 1 : - 1 ) ;
+    return iStep ;
+    },
+    //停止
+    Stop : function ( iTarget, iNow ) {
+    clearTimeout ( this._timer ) ;
+    this._slider.style[ this.Up ? "top" : "left" ] = this._target + "px" ;
+    }
+    } ;
+
+    window.onload = function ( ) {
+    function Each ( list, fun ) {
+    for ( var i = 0, len = list.length ; i < len ; i ++ ) { fun ( list[ i ], i ) ; }
+    } ;
+
+    var objs = $("idNum").getElementsByTagName("li") ;
+
+    var tv = new TransformView ( "idTransformView", "idSlider", 395, 5, {
+    onStart : function ( ) { Each ( objs, function ( o, i ) { o.className = tv.Index == i ? "on" : "" ; } ) } //按钮样式
+    } ) ;
+
+    tv.Start ( ) ;
+
+    Each ( objs, function ( o, i ) {
+    o.onmouseover = function ( ) {
+    o.className = "on" ;
+    tv.Auto = false ;
+    tv.Index = i ;
+    tv.Start ( ) ;
+    }
+    o.onmouseout = function ( ) {
+    o.className = "" ;
+    tv.Auto = true ;
+    tv.Start ( ) ;
+    }
+    } )
+    var objs2 = $("idNum2").getElementsByTagName("li") ;
+    var tv2 = new TransformView ( "idTransformView2", "idSlider2", 1005, 5, {
+    onStart : function ( ) { Each ( objs2, function ( o, i ) { o.className = tv2.Index == i ? "on" : "" ; } ) }, //按钮样式
+    Up : false
+    } ) ;
+    tv2.Start ( ) ;
+
+    Each ( objs2, function ( o, i ) {
+    o.onmouseover = function ( ) {
+    o.className = "on" ;
+    tv2.Auto = false ;
+    tv2.Index = i ;
+    tv2.Start ( ) ;
+    }
+    o.onmouseout = function ( ) {
+    o.className = "" ;
+    tv2.Auto = true ;
+    tv2.Start ( ) ;
+    }
+    } )
+
+    $ ( "idStop" ).onclick = function ( ) { tv2.Auto = false ; tv2.Stop ( ) ; }
+    $ ( "idStart" ).onclick = function ( ) { tv2.Auto = true ; tv2.Start ( ) ; }
+    $ ( "idNext" ).onclick = function ( ) { tv2.Index ++ ; tv2.Start ( ) ; }
+    $ ( "idPre" ).onclick = function ( ) { tv2.Index -- ; tv2.Start ( ) ; }
+    $ ( "idFast" ).onclick = function ( ) { if ( -- tv2.Step <= 0 ) { tv2.Step = 1 ; } }
+    $ ( "idSlow" ).onclick = function ( ) { if ( ++ tv2.Step >= 10 ) { tv2.Step = 10 ; } }
+    $ ( "idReduce" ).onclick = function ( ) { tv2.Pause -= 1000 ; if ( tv2.Pause <= 0 ) { tv2.Pause = 0 ; } }
+    $ ( "idAdd" ).onclick = function ( ) { tv2.Pause += 1000 ; if ( tv2.Pause >= 5000 ) { tv2.Pause = 5000 ; } }
+
+    $ ( "idReset" ).onclick = function ( ) {
+    tv2.Step = Math.abs ( tv2.options.Step ) ;
+    tv2.Time = Math.abs ( tv2.options.Time ) ;
+    tv2.Auto = ! ! tv2.options.Auto ;
+    tv2.Pause = Math.abs ( tv2.options.Pause ) ;
+    }
+
+    }
+    </script>
+
+</html>

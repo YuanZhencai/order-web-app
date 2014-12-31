@@ -1,0 +1,21 @@
+import play.PlayJava
+import sbt.Keys._
+import sbt._
+
+object FinancePlatformBuild extends Build {
+
+  lazy val common = Project(id = "common",base = file("common"))
+    .settings(scalaVersion := "2.10.0")
+    .enablePlugins(PlayJava)
+
+  lazy val operation = Project(id="core", base= file("operation"))
+    .settings(scalaVersion := "2.10.0")
+    .dependsOn(common).enablePlugins(PlayJava)
+
+  lazy val operationPlatform = Project(id = "operationPlatform", base = file("."))
+    .dependsOn(common)
+    .dependsOn(operation)
+    .aggregate(common, operation)
+    .settings(scalaVersion := "2.10.0")
+    .enablePlugins(PlayJava)
+}

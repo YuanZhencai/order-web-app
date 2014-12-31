@@ -1,0 +1,43 @@
+@(message: String)
+<!doctype html>
+<html lang="en" ng-app="myApp">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <base href="../">
+        <title>Operation Platform</title>
+        <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/main.css")'>
+        <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/bootstrap-main.css")'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("css/bootstrap-theme.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("ng-grid.min.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("jquery-ui.css"))'>
+    </head>
+    <body class="login">
+        <div class="form-signin">
+            <div class="text-center">
+                <img src="assets/images/logo.png" alt="Metis Logo">
+            </div>
+            <hr>
+            <div class="tab-content">
+                <div id="login" class="tab-pane active">
+                @helper.form(routes.Application.login(), 'class -> "form-horizontal", 'role -> "form") {
+                        <p class="text-muted text-center">
+                            @message
+                        </p>
+                        <input type="text" id="username" class="form-control top" name="username" placeholder="Username" required>
+                        <input type="password" id="password" class="form-control bottom" name="password" placeholder="Password" required>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox">Remember Me
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-primary btn-block">登录</button>
+                }
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
