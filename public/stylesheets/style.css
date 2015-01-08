@@ -1,17 +1,6 @@
-/*
-Template Name: EC模板堂正版授权模板
-Template URI: http://www.ecmoban.com/
-Description: 买模板请认准模板堂(ecmoban.com) <br/> 挑选优质商业模板：http://www.ecmoban.com/
-Version: 2.73
-Author: 进模板堂挑选更多ECSHOP模板
-Author URI: http://www.ecmoban.com/
-Logo filename: logo.gif
-\\
-*/
-
 /* ====================公共样式==================== */
 body{font: 12px Arial,"宋体B8B\4F53";
-color: #666; margin: 0; padding:0}
+    color: #666; margin: 0; padding:0}
 div{margin:0 auto; padding:0;}
 h1,h2,h3,h4,h5,h6,ul,li,dl,dt,dd,form,img,p{margin:0; padding:0; border:none; list-style-type:none;}
 .block{width:1190px;  margin:0 auto;}
@@ -93,7 +82,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .top_bav_l .top_nav_box{position: absolute;top: 26px;left: 0;line-height: 20px;border: 1px solid #eeeced;background: #f5f3f4;z-index: 100;display: none;width: 68px;padding: 0 5px;}
 .top_bav_l .top_weibo{width: 68px;padding: 0 5px;}
 .top_bav_l a.attention,.top_bav_l a.top_weixin,.top_bav_l a.top_weibo,.top_bav_l a.top_qq{background:url(../images/headTop_icon.png) no-repeat;}
-.top_bav_l a{height: 26px;line-height: 26px; float:left} 
+.top_bav_l a{height: 26px;line-height: 26px; float:left}
 .top_bav_l a.attention{background-position:-14px 0;width:18px;padding:0 5px;float:left;}
 .top_bav_l a.attention:hover{background-position:-64px 0;}
 .top_bav_l a.top_weixin{background-position:-131px 0;width:19px;padding:0 5px;float:left;}
@@ -169,6 +158,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 
 .shooping_car {color:white;float:right;position:relative;top:-6px;width:217px;z-index:1000; background:url(../images/cat_bg.png) no-repeat; height:43px}
 .shooping_car a{ line-height:45px; color:#fed853}
+.shooping_car span{ line-height:45px; color:#fed853}
 
 
 
@@ -186,7 +176,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 
 /* ====================模块==================== */
 
-/*商品分类*/   
+/*商品分类*/
 .menu_box_navbg{ width:240px; display:block; height:425px; background:#ffffff; left:0; position:absolute;z-index:76}
 .cata-group {width: 240px; height:128px; margin:0 auto}
 .catalog-list {background-color: #fff;height: 425px; display:block}
@@ -211,25 +201,25 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .category .catalog-over .catalog-list{ display:block; position:absolute}
 .category .catalog-list .cata-sub{ top:0}
 #category_tree{ width:240px; height:425px;}
-#category_tree li{ font-size:14px; line-height:40px; position:relative; z-index:1; padding-right:15px; height:31px; float:left} 
+#category_tree li{ font-size:14px; line-height:40px; position:relative; z-index:1; padding-right:15px; height:31px; float:left}
 #category_tree .wr_menu_box{font:12px/24px "宋体",Arial; text-align:left; color:#333; position:absolute; z-index:999; top:30px; left:-75px; height:auto}
 .wr_menu_box .menu_box_g { background:url(../images/mt_box_ft.png) no-repeat left bottom; padding-bottom:40px; width:664px; _background:none; float:left}
 .wr_menu_box .menu_width {  background:url(../images/mt_box_bg.png) repeat-y left top; width:664px; _background:none; _border:none; float:left}
 .wr_menu_box .menu_box_info {width:590px; margin:0 auto; border-top:1px solid #ccc; _background:#fff; _border:1px solid #ccc; _overflow:hidden; zoom:1;}
 .wr_menu_box dl { width:130px; float:left; margin:25px 0 0 5px; }
-.wr_menu_box dl dt { font-weight:700; font-family:Arial, Helvetica, sans-serif;width:110px; padding-left:15px; float:left; line-height:26x; margin:2px 0; background:none}
+.wr_menu_box dl dt { font-weight:700; font-family:Arial, Helvetica, sans-serif;width:110px; padding-left:15px; float:left; line-height:26px; margin:2px 0; background:none}
 .wr_menu_box dl dd a{ color:#666666; background:none; float:left; margin:2px 0; padding-left:15px; width:110px;; font-size:12px; padding-right:10px; text-decoration:none}
 .wr_menu_box dl dd a:hover{ background:#90a062; color:#ffffff}
-   
-/*里页分类树*/	
+
+/*里页分类树*/
 #category_tree .cate h1{ font-size:12px; font-weight: bold; font-family:"微软雅黑"; height:35px; line-height:35px;border-top:1px solid #eee }
-#category_tree .cate h1 a{ font-size:12px; color:#0d0d0d }	
+#category_tree .cate h1 a{ font-size:12px; color:#0d0d0d }
 .sale_box{ border:1px solid #e3e3e3; background:url(../images/sale_bg.gif) repeat-x #f8f8f8; padding:10px; width:1180px; }
 .sale_box .tit{ font-size:14px; font-weight:bold; padding:5px 15px 0 15px;  }
 .sale_box ul{ float:left; width:205px; height:262px; padding:15px; line-height:22px;}
 .sale_box ul img{ width:200px; height:200px;}
 
-/*销售排行*/   
+/*销售排行*/
 .top10Tit{background:url(../images/bg.gif) no-repeat 0px -85px; height:30px;}
 .top10List{background-color:#fff; margin:0px 4px 4px 4px;}
 .top10List ul{border-bottom:1px solid #ddd; position:relative;}
@@ -241,15 +231,15 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 
 /*linkCOLOR*/
 .top10List li a,#mallNews .NewsList li a,.boxCenterList li a{color:#3f3f3f; text-decoration:none;}
-.top10List li a:hover,#mallNews .NewsList li a:hover,.boxCenterList li a:hover{color:#ff6f3d; text-decoration: underline;} 
-.top10_1{ width:223px; height:106px; background: url(../images/top10_1.gif) no-repeat}
+.top10List li a:hover,#mallNews .NewsList li a:hover,.boxCenterList li a:hover{color:#ff6f3d; text-decoration: underline;}
+.top10_1{ width:223px; height:106px;}
 .top10_1 li{ color:#FFF; font-size:12px; font-weight:bold}
 .top10_1 li a{ color:#FFF; font-weight:normal; display:block; padding-bottom:7px; }
 .top10_1 li .f1{ color:#FFF}
 
 /*首页焦点图*/
 #mallNews{ overflow:hidden }
-.newart_tit{ width:192px; height:26px; line-height:26px; background:url(../images/newart_tit.gif);color:#c90707;font-weight:bold;font-size:14px;text-align:left; color:#333; font-size:12px; padding-left:10px;}
+.newart_tit{ width:192px; height:26px; line-height:26px;color:#c90707;font-weight:bold;font-size:14px;text-align:left; color:#333; font-size:12px; padding-left:10px;}
 #mallNews .NewsList{background:#FFFFFF; padding:7px;}
 #mallNews .NewsList ul{ line-height:25px;}
 #mallNews .NewsList li{background:url(../images/bg.gif) no-repeat 0px -164px; padding:0px 0px 0px 10px;line-height:22px; height:22px;text-align:left; color:#666; overflow:hidden}
@@ -278,11 +268,11 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 /*精品推荐，新品上市，热卖商品*/
 .centerPadd{padding:5px 8px 8px 8px; overflow:hidden;}
 .box_3{ border:1px solid #dedede; background:url(../images/tit1.gif) repeat-x }
-.itemTit .tit{ height:32px; line-height:32px; background:url(../images/cat_tit_bg.gif) repeat-x; padding-right:10px}
+.itemTit .tit{ height:32px; line-height:32px; padding-right:10px}
 .itemTit .tit .ss_class{ float:right}
 .itemTit .tit .ss_class a{ color:#666}
-.itemTit .tit .f_l{ width:180px;font-size:16px; font-weight:bold; padding-left:25px; background:url(../images/cat_tit_l.gif) no-repeat}
-.itemTit .tit .f_l a{ color:#666; font-size:16px; font-weight:bold} 
+.itemTit .tit .f_l{ width:180px;font-size:16px; font-weight:bold; padding-left:25px;}
+.itemTit .tit .f_l a{ color:#666; font-size:16px; font-weight:bold}
 .itemBest_box .box_1{ border:1px solid #bddbfd; background:#e6f2ff; padding:15px 20px 5px 20px; margin-top:-1px;}
 .itemBest_box .f1{ color:#1e51a4; font-weight:bold}
 .itemBest_box .f1 a{ color:#1e51a4;}
@@ -306,7 +296,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .goodsItem span.hot{background:url(../images/bg.gif) no-repeat -161px -304px;}
 .goods_cat{ padding:10px;}
 .goods_cat .goodsItem{ padding:5px 11px 15px 10px; }
-	   	   
+
 /*商品分类*/
 .xm-box{ border-top:4px solid #d41c4f}
 .xm-box .title{ height:42px; line-height:42px; padding:0 10px; font-size:14px; font-weight:normal;color:#666; text-align:right; background:#f1f1f1; border-top:3px solid #fff;}
@@ -414,7 +404,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .regtitle{ width:510px; height:35px; background:url(../images/user_tit2.gif)}
 
 /*注册*/
-.usBox_2{background:#fff url(../images/usBox_2bg.gif) 550px center no-repeat ; text-align:left; padding:43px 153px 60px 123px;}
+.usBox_2{background:#fff 550px center no-repeat ; text-align:left; padding:43px 153px 60px 123px;}
 .usBox_2 .regtitle{height:30px; background:url(../images/ur_bg.gif) no-repeat 0px -34px;}
 .actionSub a{color:#000; text-decoration:underline;background:url(../images/ur_bg.gif) no-repeat 0px -68px; padding-left:14px;}
 .box_1 .userCenterBox .userMenu a{display:block; height:25px; line-height:25px; background:url(../images/menuBg.gif) no-repeat 0 -30px;color:#3f3f3f; text-decoration:none; margin:0 0 3px 10px; padding-left:3px;}
@@ -461,7 +451,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .flowGoodsFittings li{float:left; width:222px; font-size:12px; line-height:22px;}
 .flowGoodsFittings li.goodsimg{width:220px; margin-right:10px;}
 .flowGoodsFittings li.goodsimg img{width:220px; height:220px; display:block;}
-		
+
 /* ====================文章列表页-2009.6.8==================== */
 .article_search{margin:8px 0;}
 .article_search .inputBg{width:300px;}
@@ -485,7 +475,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 
 /*底部*/
 
-/*页尾样式*/  
+/*页尾样式*/
 .footer { text-align: center;border-top: 1px solid #ccc;margin-top: 0;padding-top: 23px;}
 .footer .footer-menu{ width:1150px; margin:0 auto}
 .footer .footer-menu dl{border-right: 1px solid #dedede;float: left;height: 93px;line-height: 200%;margin-right: 20px;padding-right: 50px;text-align: left;}
@@ -494,7 +484,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .footer .tel-us .online-link {bottom: 0;color: #fff;display: block;font-size: 14px;font-weight: 700;height: 35px;line-height: 25px;position: absolute;text-align: left;text-indent: 55px;width: 134px;}
 .footer .copyright {border-top: 1px solid #ebebeb;color: #999;margin-top: 35px;padding-top: 15px;text-align: center;}
 
-/*智能提示弹出层*/ 
+/*智能提示弹出层*/
 .vjia-suggest-container{display:none;width:306px;position:absolute;top:27px;left:0;border:1px solid #b3b3b3;background-color:#fff;z-index:98;}
 .full .vjia-suggest-container{width:406px;}
 .vjia-suggest-container ol{border-bottom:3px solid #d8d8d8;list-style:none;margin:0;padding:0;}
@@ -506,8 +496,8 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .messagediv {font-size:12px;position:absolute;border:1px solid #FFD700;text-align:center;padding:5px;background-color:#FFFACD;filter:alpha(opacity=50);-moz-opacity:0.7;opacity: 0.7;}
 
 /* ======商品比较浮动块 ====== */
-#compareBox { background:url(../images/comparebox.gif) no-repeat;width:140px;position: absolute;right:1px;top:200px; padding-top:21px;}
-#compareBox input {width:140px; height:26px;border:none;background:url(../images/compareSub.gif) no-repeat;}
+#compareBox { width:140px;position: absolute;right:1px;top:200px; padding-top:21px;}
+#compareBox input {width:140px; height:26px;border:none;}
 #compareList {padding:0px;width:138px;background:#FFFFFF;border:1px solid #91b3cb; border-bottom: none; padding-top:5px;}
 #compareList li {color: #333;text-align:left;background: #eff8ff;padding: 3px 5px;margin: 0 5px 5px 5px; border:1px solid #dceaf5}
 #compareList li img {float:right;padding-top:4px;}
@@ -543,7 +533,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 /* ©2008 MagicToolbox.com. To use this code on your own site, visit http://www.magictoolbox.com */
 
 /* CSS class for thumbnail link <A> */
-.MagicThumb {cursor: url(../images/zoomin.cur), pointer;outline: none;}
+.MagicThumb {outline: none;}
 
 /* CSS class for the thumbnail link <A> when the big image is zoomed mo ban tang ban quan suo you */
 .MagicThumb-zoomed { cursor: default; }
@@ -558,7 +548,7 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .MagicThumb-image { border: 1px solid #cccccc; outline: none; }
 
 /* CSS class for the zoomed big image */
-.MagicThumb-image-zoomed { cursor: url(../images/zoomout.cur), pointer; }
+.MagicThumb-image-zoomed {}
 
 /* CSS class for the caption under the big zoomed image */
 .MagicThumb-caption {color: #333333;background-color: #F0F0F0;border: 1px solid #CCCCCC;border-top: none;font-family: Verdana, Helvetica;font-size: 11px;padding: 8px 16px;}
@@ -566,14 +556,14 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 /* CSS class for the control bar ec mo ban */
 .MagicThumb-controlbar {display: block;height: 18px;}
 .MagicThumb-controlbar a {display: block;width: 18px;height: 18px;margin: 0px 1px;outline: none;float: left;overflow: hidden;}
-.MagicThumb-controlbar a span {display: block;width: 990px;height: 990px;background: transparent url(../images/controlbar.png) no-repeat 0 0;outline: none;position: absolute;left: 0px;top: 0px;}
+.MagicThumb-controlbar a span {display: block;width: 990px;height: 990px;background: transparent  0 0;outline: none;position: absolute;left: 0px;top: 0px;}
 
 /* CSS class for the loading message box */
-.MagicThumb-loading {border: 1px solid #000000;background: #ffffff url(../images/loader.gif) no-repeat 2px 50%;padding: 2px 2px 2px 22px;margin: 0;text-decoration: none;text-align: left;font-size: 8pt;font-family: sans-serif;}
+.MagicThumb-loading {border: 1px solid #000000;background: #ffffff  2px 50%;padding: 2px 2px 2px 22px;margin: 0;text-decoration: none;text-align: left;font-size: 8pt;font-family: sans-serif;}
 .picture{margin-top:10px;text-align:left;}
 .picture img{width:65px;height:65px;cursor:pointer; margin:0 0px; margin-right:3px;}
 .picture img.onbg{ border:1px solid #ff6f3d;}
-.picture img.autobg{border:1px solid #fff;}	
+.picture img.autobg{border:1px solid #fff;}
 .left_help{ border:1px solid #e2e2e2;}
 .left_help dl{ padding:10px;}
 .left_help dl dt{ font-weight:bold; font-size:12px; background:#e5e5e5; height:24px;line-height:24px; padding-left:10px;}
@@ -586,10 +576,10 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
 .art_cat_box td a{ font-weight:bold; color:#3f3f3f; padding-left:20px; }
 
 .container, .container *{margin:0; padding:0;}
-.container{width:1005px; height:395px; overflow:hidden;position:relative; left:0px;margin-left: 10px;margin-right:10px;}
+.container{width:1005px; height:395px; overflow:hidden;position:relative; right:0px}
 .slider{position:absolute;}
 .slider li{list-style:none;display:inline;}
-.slider img{width:1170px; height:395px; display:block;}
+.slider img{width:1005px; height:395px; display:block;}
 .slider2{width:2000px;}
 .slider2 li{float:left;}
 .num{position:absolute; right:5px; bottom:5px;}
@@ -619,31 +609,15 @@ h6 span{float:left; padding-left:15px; font-size:14px;}
     background-color: #d71437;
     font-weight: bold;
 }
-
-.modal-dialog{
-    width: 500px;
-    margin: 198px auto;
-}
-.modal-dialog label{
-    margin-left: 10px;
-}
-.modal-dialog tr{
-    margin-top: 5px;
+.redBold{
+    color:#ff6f3d;font-weight:bold;
 }
 
-.modal-dialog td{
-    padding-top: 10px;
-    padding-bottom: 10px;
+.goodsimgDesc a img{
+    width: 138px;
+    height: 33px;
 }
 
-
-
-
-
-
-
- 
-
-
-
-
+.text-center{
+    text-align: center;
+}

@@ -8,6 +8,7 @@ var MenuInfoCtrl = function ($modal, $scope, $location, MenuService, FileUploade
         {field: 'foodId', displayName: '菜单ID'},
         {field: 'foodName', displayName: '菜名'},
         {field: 'priceStr', displayName: '价格'},
+        {field: 'foodType', displayName: '类别'},
         {field: 'source', displayName: '来源'},
         {field: 'locked', displayName: '操作', cellTemplate: '/assets/faces/cell/userCell.html'}
     ];

@@ -24,5 +24,5 @@ public interface UserInfoDao {
 
     public boolean isExist(UserInfos userInfo);
 
-    public boolean verify(UserInfos userInfo);
+    public UserInfos verify(UserInfos userInfo);
 }

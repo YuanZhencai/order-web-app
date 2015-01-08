@@ -1,8 +1,8 @@
 <link rel="stylesheet" media='screen' href='../../assets/stylesheets/modal.css'>
-<div class="row" ng-controller="MenuInfoCtrl as uc">
+<div class="row" ng-controller="RuleCtrl as uc">
     <div class="row">
         <h1>
-            菜单信息
+            规则管理
         </h1>
         <hr>
     </div>
@@ -18,45 +18,34 @@
     </div>
 
 
-    <script type="text/ng-template" id="MenuModalContent.html" controller="MenuModalCtrl">
+    <script type="text/ng-template" id="RuleModalContent.html" controller="RuleModalCtrl">
         <form role="form" ng-submit="update()">
             <table>
                 <tbody>
                 <div class="modal-body">
                     <tr>
                         <td>
-                            <label class="control-label">菜名:</label>
+                            <label class="control-label">规则类型:</label>
                         </td>
                         <td>
-                            <input class="form-control" type="text" name="foodName" required
-                                   ng-model="food.foodName">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">价格:</label>
-                        </td>
-                        <td>
-                            <input class="form-control" type="text" name="price" required
-                                   ng-model="food.priceStr">
+                            <input class="form-control" type="text" name="type" required
+                                   ng-model="rule.ruleType">
                         </td>
                     </tr>
                     <tr>
                         <td>
-                            <label class="control-label">类别:<br>(主\辅菜)</label>
+                            <label class="control-label">键:</label>
                         </td>
                         <td>
-                            <input class="form-control" type="text" name="foodType" required
-                                   ng-model="food.foodType">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label class="control-label">来源:<br>(饭店名)</label>
+                            <input class="form-control" type="text" name="key" required
+                                   ng-model="rule.ruleKey">
                         </td>
                         <td>
-                            <input class="form-control" type="text" name="source" required
-                                   ng-model="food.source">
+                            <label class="control-label">值:</label>
+                        </td>
+                        <td>
+                            <input class="form-control" type="text" name="value" required
+                                   ng-model="rule.ruleValue">
                         </td>
                     </tr>
                     <tr>

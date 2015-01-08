@@ -117,7 +117,6 @@ var PageService = function ($scope, $http ,$timeout) {
     $scope.$watch('queryRule', function (newVal, oldVal) {
         if (newVal !== oldVal) {
             $scope.getQueryDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
-            $scope.filterOptions.filterText = {};
         }
     }, true);
 

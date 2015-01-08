@@ -73,7 +73,7 @@ public class CommonUtil {
 
     public static final String YYYYMMDDHHMMSS = "yyyyMMddHHmmss";
 
-    private static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern(DATE_FORMAT_SHORT);
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormat.forPattern(DATE_FORMAT_SHORT);
 
     public static  String dateToString(Date date, String... format) {
         if (date == null) {

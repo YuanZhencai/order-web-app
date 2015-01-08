@@ -15,7 +15,8 @@ import java.util.List;
  * Created by guxuelong on 2014/12/26.
  */
 public class OrderInfoDaoImpl extends EntityBaseDao implements OrderInfoDao {
-
+    private static final String QUERY_ORDER_ALL = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.delFlg = 'N'";
+    private static final String QUERY_ORDER_BY_USER_NM = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.delFlg = 'N' order by source,foodName";
     private static final String QUERY_ORDER = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.userName = :userName and t.delFlg = 'N'";
     public static final String START_TIME = " 00:00:00";
     public static final String END_TIME = " 23:59:59";
@@ -56,9 +57,22 @@ public class OrderInfoDaoImpl extends EntityBaseDao implements OrderInfoDao {
     }
 
     @Override
-    public List<OrderInfo> findAll(){
-        return findAll(OrderInfo.class);
+    public List<OrderInfo> findAll(String createTime){
+        Query query = super.createQuery(QUERY_ORDER_ALL);
+        setTimePara(createTime,query);
+        List<OrderInfo> result = query.getResultList();
+        return result;
     }
+
+    @Override
+    public List<OrderInfo> findOrderByUserName(String createTime){
+        Query query = super.createQuery(QUERY_ORDER_BY_USER_NM);
+        setTimePara(createTime,query);
+        List<OrderInfo> result = query.getResultList();
+        return result;
+    }
+
+
 
     /**
      * in database

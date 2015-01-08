@@ -9,7 +9,9 @@ public class MenuInfoVo {
     private Long id;
     private String foodId;
     private String foodName;
+    private String foodType;
     private String source;
+    private String priceScope;
     private BigDecimal price;
     private BigDecimal count;
     private String picture;
@@ -36,6 +38,22 @@ public class MenuInfoVo {
 
     public void setFoodName(String foodName) {
         this.foodName = foodName;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
+    }
+
+    public String getPriceScope() {
+        return priceScope;
+    }
+
+    public void setPriceScope(String priceScope) {
+        this.priceScope = priceScope;
     }
 
     public String getSource() {

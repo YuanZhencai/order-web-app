@@ -28,6 +28,12 @@ angular.module('myApp.routeConfig', ['ngRoute'])
             .when('/user/findMenuInfo', {
             templateUrl: '/assets/faces/menu/menu.html'
              })
+            .when('/user/findOrderInfo', {
+            templateUrl: '/assets/faces/order/order.html'
+             })
+           .when('/rule/findRule', {
+            templateUrl: '/assets/faces/rule/rule.html'
+            })
             .otherwise({redirectTo: '/'})
 ## 加上这句去掉URL里的#号
 #        $locationProvider.html5Mode(true);

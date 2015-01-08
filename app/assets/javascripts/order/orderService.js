@@ -25,15 +25,43 @@ var OrderService = function ($http, $q) {
     };
 
 
-    OrderService.prototype.add = function (order) {
+    OrderService.prototype.add = function (pager) {
         var deferred;
-        console.debug("UserService.add()");
+        console.debug("orderService.add()");
         deferred = $q.defer();
-        $http.post("/addOrderInfo", order).then(function (data) {
-            console.info("Successfully add user");
+        $http.post("/addOrderInfo", pager).then(function (data) {
+            console.info("Successfully add order");
             return deferred.resolve(data);
         }, function (data, status) {
-            console.error("Failed to add user" + status);
+            console.error("Failed to add order" + status);
+            return deferred.reject(data);
+        });
+        return deferred.promise;
+    };
+
+    OrderService.prototype.update = function (order) {
+        var deferred;
+        console.debug("orderService.add()");
+        deferred = $q.defer();
+        $http.post("/updateOrderInfo", order).then(function (data) {
+            console.info("Successfully add order");
+            return deferred.resolve(data);
+        }, function (data, status) {
+            console.error("Failed to add order" + status);
+            return deferred.reject(data);
+        });
+        return deferred.promise;
+    };
+
+    OrderService.prototype.exportDailyOrderList = function (pager) {
+        var deferred;
+        console.debug("OrderService()");
+        deferred = $q.defer();
+        $http.post("/exportDailyOrderList", pager).then(function (data, status) {
+            console.info("Successfully find OrderResult - status " + data);
+            return deferred.resolve(data);
+        }, function (data, status) {
+            console.error("Failed to find OrderResult - status " + status);
             return deferred.reject(data);
         });
         return deferred.promise;

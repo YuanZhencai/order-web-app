@@ -125,10 +125,6 @@
                                 <a href="/#/user/findUserInfo">
                                     <i class="fa fa-angle-right"></i>用户信息</a>
                             </li>
-                            <li>
-                                <a href="/#/finance/balance">
-                                    <i class="fa fa-angle-right"></i>订单统计</a>
-                            </li>
                         </ul>
                     </li>
 
@@ -142,9 +138,31 @@
                                 <a href="/#/user/findMenuInfo">
                                     <i class="fa fa-angle-right"></i>菜单信息</a>
                             </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="title" href="javascript:;">
+                            <i class="fa fa-tasks"></i>
+                            <span class="link-title">订单管理</span>
+                        </a>
+                        <ul>
                             <li>
-                                <a href="/#/finance/balance">
-                                    <i class="fa fa-angle-right"></i>订单统计</a>
+                                <a href="/#/user/findOrderInfo">
+                                    <i class="fa fa-angle-right"></i>订单信息</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a class="title" href="javascript:;">
+                            <i class="fa fa-tasks"></i>
+                            <span class="link-title">公共管理</span>
+                        </a>
+                        <ul>
+                            <li>
+                                <a href="/#/rule/findRule">
+                                    <i class="fa fa-angle-right"></i>规则管理</a>
                             </li>
                         </ul>
                     </li>
@@ -197,4 +215,14 @@
     <script src='@routes.Assets.at("javascripts/menu/menuCtrl.js")' type="text/javascript"></script>
     <script src='@routes.Assets.at("javascripts/menu/menuService.js")' type="text/javascript"></script>
     <script src='@routes.Assets.at("javascripts/menu/menuModalCtrl.js")' type="text/javascript"></script>
+
+
+    <script src='@routes.Assets.at("javascripts/order/orderCtrl.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/order/orderService.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/order/orderModalCtrl.js")' type="text/javascript"></script>
+
+    <script src='@routes.Assets.at("javascripts/rule/ruleCtrl.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/rule/ruleService.js")' type="text/javascript"></script>
+    <script src='@routes.Assets.at("javascripts/rule/ruleModalCtrl.js")' type="text/javascript"></script>
+
 </html>

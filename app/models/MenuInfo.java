@@ -18,6 +18,8 @@ public class MenuInfo extends IdEntity {
     private String foodId;
     @Column(name = "FOOD_NAME")
     private String foodName;
+    @Column(name = "FOOD_TYPE")
+    private String foodType;
     @Column(name = "SOURCE")
     private String source;
     @Column(name = "PRICE")
@@ -51,6 +53,14 @@ public class MenuInfo extends IdEntity {
 
     public void setFoodName(String foodName) {
         this.foodName = foodName;
+    }
+
+    public String getFoodType() {
+        return foodType;
+    }
+
+    public void setFoodType(String foodType) {
+        this.foodType = foodType;
     }
 
     public String getSource() {

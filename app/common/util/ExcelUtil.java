@@ -1,11 +1,15 @@
 package common.util;
 
 import common.exceptions.ConverterException;
+import common.vo.ExcelContainer;
+import common.vo.ExcelDemoVo;
+import common.vo.ExcelFooter;
+import common.vo.ExcelHeader;
 import dto.BaseXlsDto;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -14,6 +18,7 @@ import play.Logger;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -32,7 +37,7 @@ public class ExcelUtil {
     }
 
     /**
-     * 读取excel文件内容
+     * 读取Excel文件内容 并存入指定对象列表
      *
      * @param file
      * @param fileType
@@ -45,6 +50,101 @@ public class ExcelUtil {
             return readXls(file, xlsDto);
         }
         return readXlsx(file, xlsDto);
+    }
+
+    /**
+     * 导出Excel
+     *
+     * @param excelDemoVo
+     */
+    public static void exportExcel(ExcelDemoVo excelDemoVo) {
+
+        ExcelHeader header = excelDemoVo.getHeader();
+        ExcelContainer container = excelDemoVo.getContainer();
+        ExcelFooter footer = excelDemoVo.getFooter();
+
+
+
+        // 第一步，创建一个webbook，对应一个Excel文件
+        HSSFWorkbook wb = new HSSFWorkbook();
+        // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
+        HSSFSheet sheet = wb.createSheet(header.getSheetName());
+        // 第三步，在sheet中添加表头第0行,注意老版本poi对Excel的行数列数有限制short
+        HSSFRow row = sheet.createRow((int) 0);
+        // 第四步，创建单元格，并设置值表头 设置表头居中
+        HSSFFont front  = wb.createFont();
+        front.setFontHeightInPoints((short) 10);// 字号
+        front.setBoldweight(HSSFFont.BOLDWEIGHT_BOLD);// 加粗
+        HSSFCellStyle styleTitle = wb.createCellStyle();
+        styleTitle.setFont(front);
+
+        HSSFCellStyle style = wb.createCellStyle();
+        HSSFCell cell = row.createCell((short) 0);
+        cell.setCellValue("");
+        cell = row.createCell((short) 1);
+        cell.setCellValue(header.getTitles());
+        cell.setCellStyle(styleTitle);
+        row = sheet.createRow((int) 1);
+
+        //第五步，写入实体数据 实际应用中这些数据从数据库得到
+        // container
+        CellStyle styleFiledName = wb.createCellStyle();
+        styleFiledName.setFillPattern(HSSFCellStyle.ALT_BARS);
+        styleFiledName.setFillForegroundColor(HSSFColor.GREY_25_PERCENT.index);
+        styleFiledName.setFillBackgroundColor(HSSFColor.GREY_25_PERCENT.index);
+
+        List<String> fieldName = container.getFieldName();
+        row = sheet.createRow((int) 2);
+
+        for (int i = 0; i < fieldName.size(); i++)
+        {
+            cell = row.createCell((short) i);
+            cell.setCellValue(fieldName.get(i));
+            cell.setCellStyle(styleFiledName);
+        }
+        int rowNum = 0;
+        List<List<String>> fieldContexts = container.getFieldContext();
+        for (int i = 0; i < fieldContexts.size(); i++)
+        {
+            row = sheet.createRow((int) 3 + i);
+            List<String> context = fieldContexts.get(i);
+            for (int j = 0; j < context.size();j++){
+                cell = row.createCell((short) j);
+                cell.setCellValue(context.get(j));
+                cell.setCellStyle(style);
+            }
+            rowNum++;
+        }
+
+        // footer
+        fieldName = footer.getFieldName();
+        row = sheet.createRow((int) 3 + rowNum);
+        for (int i = 0; i < fieldName.size(); i++)
+        {
+            cell = row.createCell((short) i);
+            cell.setCellValue(fieldName.get(i));
+            cell.setCellStyle(styleFiledName);
+        }
+
+        fieldContexts = footer.getFieldContext();
+        for (int i = 0; i < fieldContexts.size(); i++)
+        {
+            row = sheet.createRow((int) 4 + rowNum + i);
+            List<String> context = fieldContexts.get(i);
+            for (int j = 0; j < context.size();j++){
+                cell = row.createCell((short) j);
+                cell.setCellValue(context.get(j));
+                cell.setCellStyle(style);
+            }
+        }
+        // 第六步，将文件存到指定位置
+        try {
+            FileOutputStream fout = new FileOutputStream(excelDemoVo.getFileName());
+            wb.write(fout);
+            fout.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -86,8 +186,6 @@ public class ExcelUtil {
     }
 
 
-
-
     /**
      *  * 读取xls文件内容
      *  *
@@ -126,18 +224,17 @@ public class ExcelUtil {
     }
 
 
-
-    private static Map<String, Object> setMapValues(BaseXlsDto xlsDto,Row row) throws Exception {
+    private static Map<String, Object> setMapValues(BaseXlsDto xlsDto, Row row) throws Exception {
         List<String> nameList = xlsDto.getNameList();
         List<String[]> nameAndRowNoList = xlsDto.getNameAndRowNoList();
         Map<String, Object> map = new HashMap<>();
-        if(!nameList.isEmpty()) {
+        if (!nameList.isEmpty()) {
             for (int i = 0; i < xlsDto.getLength(); i++) {
                 map.put(nameList.get(i), getValue(row.getCell(i)));
             }
             return map;
         }
-        if(!nameAndRowNoList.isEmpty()){
+        if (!nameAndRowNoList.isEmpty()) {
             for (int i = 0; i < xlsDto.getLength(); i++) {
                 String[] strings = nameAndRowNoList.get(i);
                 map.put(strings[0], getValue(row.getCell(Integer.valueOf(strings[1]))));

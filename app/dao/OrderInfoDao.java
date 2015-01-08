@@ -14,7 +14,9 @@ public interface OrderInfoDao {
 
     public boolean doUpdate(OrderInfo orderInfo);
 
-    public List<OrderInfo> findAll();
+    public List<OrderInfo> findAll(String createTime);
+
+    public List<OrderInfo>findOrderByUserName(String createTime);
 
     public List<OrderInfo> findSubset(int start, int end);
 

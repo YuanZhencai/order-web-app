@@ -14,6 +14,7 @@ public class OrderInfoVo {
     private String foodName;
     private String source;
     private BigDecimal price;
+    private String priceStr;
     private String delFlg;
     private Date createTime;
     private String createBy;

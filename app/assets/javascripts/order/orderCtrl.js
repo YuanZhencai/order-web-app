@@ -1,45 +1,46 @@
-var OrderCtrl = function($modal,$scope, $location,OrderService) {
-    $scope.pager = {
-        filter: {
-            EQS_status: ''
-        },
-        index: 0,
-        pageSize: 2,
-        pageNum: 1
+var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
+    $scope.columnDefs = [
+        {field: 'userName', displayName: '用户名'},
+        {field: 'foodName', displayName: '菜名'},
+        {field: 'priceStr', displayName: '价格'},
+        {field: 'source', displayName: '来源'},
+        {field: 'locked', displayName: '操作', cellTemplate: '/assets/faces/cell/userCell.html'}
+    ];
+    $scope.isNotInit = true;
+    $scope.pageUrl = "/findOrderInfo";
+    new PageService($scope, $http, $timeout);
+    $scope.editRow = function (row) {
+        $scope.open(row);
+
+    };
+    $scope.deleteRow = function (row) {
+        UserService.delete(row.entity).then(function (data) {
+            console.info("delete to userInfo successfully : " + data);
+            $scope.myData.splice(row.rowIndex,1);
+        }, function (error) {
+            console.error("delete to userInfo error : " + error.data);
+        });
     };
 
-    OrderCtrl.prototype.findResult = function() {
+    OrderCtrl.prototype.exportDailyOrderList = function () {
         console.debug("findResult()");
-        return OrderService.findResult($scope.pager).then((function(data) {
+        return OrderService.exportDailyOrderList($scope.pager).then((function (data) {
             console.debug("Promise returned " + data.length + " banks");
-            $scope.pager = data.data;
-            $scope.results = data.data.list;
-        }), function(error) {
+        }), function (error) {
             console.error("Unable to get activities: " + error);
             $scope.error = error;
         });
     };
-    $scope.addRow = function (food) {
-        var order = {
-            userName:"",
-            foodName:food.foodName,
-            source:food.source,
-            priceStr:food.priceStr
-        };
-        $scope.open(order);
-    };
-
-    $scope.open = function (food) {
+    $scope.open = function (row) {
         $modal.open({
             templateUrl: "OrderModalContent.html",
             controller: "OrderModalCtrl",
             resolve: {
-                food: function(){
-                    return food;
+                row: function(){
+                    return row.entity;
                 }
             }
         });
     };
 };
-
 controllersModule.controller('OrderCtrl', OrderCtrl);

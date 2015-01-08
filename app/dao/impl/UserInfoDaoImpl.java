@@ -111,11 +111,14 @@ public class UserInfoDaoImpl extends EntityBaseDao implements UserInfoDao{
      * @param userInfo
      * @return
      */
-    public boolean verify(UserInfos userInfo){
+    public UserInfos verify(UserInfos userInfo){
         List<UserInfos> user = (List<UserInfos>) findBy(UserInfos.class,"userId",userInfo.getUserId());
         if(user == null || user.isEmpty()){
-            return false;
+            return null;
         }
-        return user.get(0).getPassword().equals(userInfo.getPassword());
+        if(user.get(0).getPassword().equals(userInfo.getPassword())){
+            return user.get(0);
+        }
+        return null;
     }
 }

@@ -30,12 +30,32 @@ public class MenuInfoServiceImpl implements MenuInfoService {
         List<MenuInfoVo> voList = new ArrayList<>();
         for (MenuInfo menuInfos : list) {
             if("N".equals(menuInfos.getDelFlg())) {
-                MenuInfoVo MenuInfoVo = new MenuInfoVo();
-                BeanUtils.copyProperties(MenuInfoVo, menuInfos);
-                voList.add(MenuInfoVo);
+                MenuInfoVo menuInfoVo = new MenuInfoVo();
+                BeanUtils.copyProperties(menuInfoVo, menuInfos);
+                setPriceScope(menuInfoVo);
+                voList.add(menuInfoVo);
             }
         }
         return voList;
+    }
+
+    private void setPriceScope(MenuInfoVo menuInfoVo){
+        if( menuInfoVo.getPrice().compareTo(new BigDecimal(10)) == 1  && menuInfoVo.getPrice().compareTo(new BigDecimal(15)) < 1){
+            menuInfoVo.setPriceScope("15");
+            return;
+        }
+        if( menuInfoVo.getPrice().compareTo(new BigDecimal(15)) == 1  && menuInfoVo.getPrice().compareTo(new BigDecimal(20)) < 1){
+            menuInfoVo.setPriceScope("20");
+            return;
+        }
+        if( menuInfoVo.getPrice().compareTo(new BigDecimal(20)) == 1  && menuInfoVo.getPrice().compareTo(new BigDecimal(25)) < 1){
+            menuInfoVo.setPriceScope("25");
+            return;
+        }
+        if( menuInfoVo.getPrice().compareTo(new BigDecimal(25)) == 1){
+            menuInfoVo.setPriceScope("30");
+            return;
+        }
     }
 
     /**

@@ -1,5 +1,6 @@
 package service;
 
+import common.vo.ExcelDemoVo;
 import vo.OrderInfoVo;
 
 import java.util.List;
@@ -14,7 +15,14 @@ public interface OrderInfoService {
      *
      * @return
      */
-    public List<OrderInfoVo> findAll() throws Exception;
+    public List<OrderInfoVo> findAll(String createTime) throws Exception;
+
+    /**
+     * 获取当日订餐清单
+     *
+     * @return
+     */
+    public ExcelDemoVo queryDailyOrderList(String createTime) throws Exception;
 
     /**
      * 添加新订单

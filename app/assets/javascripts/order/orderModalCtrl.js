@@ -1,7 +1,7 @@
-var OrderModalCtrl = function ($scope, food, $modalInstance, OrderService) {
-    $scope.order = food;
+var OrderModalCtrl = function ($scope, row, $modalInstance, OrderService) {
+    $scope.order = row;
     $scope.update = function () {
-        OrderService.add($scope.order).then(function (data) {
+        OrderService.update($scope.order).then(function (data) {
             console.info("add to userInfo successfully : " + data);
         }, function (error) {
             console.error("update to userInfo error : " + error.data);
