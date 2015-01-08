@@ -10,7 +10,7 @@ import models.OrderInfo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.joda.time.DateTime;
 import service.OrderInfoService;
-import vo.ExportOrderVo;
+import vo.OrderExportVo;
 import vo.OrderInfoVo;
 
 import java.lang.reflect.InvocationTargetException;
@@ -54,7 +54,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         // query orderList by restaurantName & foodName
         List<OrderInfo> list = dao.findOrderByUserName(createTime);
         // total the total price and the total quantity of a single dish meal in the ordering list
-        List<ExportOrderVo> listVo = getExportOrderVo(list);
+        List<OrderExportVo> listVo = getExportOrderVo(list);
         // set the filedContexts of container and footer
         List<List<String>> filedContexts = new ArrayList<>();
         List<List<String>> footerContexts = new ArrayList<>();
@@ -62,11 +62,11 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return getExcelDemoVo(filedContexts, footerContexts);
     }
 
-    private List<ExportOrderVo> getExportOrderVo(List<OrderInfo> list) throws IllegalAccessException, InvocationTargetException {
+    private List<OrderExportVo> getExportOrderVo(List<OrderInfo> list) throws IllegalAccessException, InvocationTargetException {
         int count = 0;
         int size = 0;
-        List<ExportOrderVo> listVo = new ArrayList<>();
-        ExportOrderVo exportOrderVo;
+        List<OrderExportVo> listVo = new ArrayList<>();
+        OrderExportVo exportOrderVo;
         OrderInfo temp = list.get(0);
         for (OrderInfo orderInfo : list) {
             size++;
@@ -74,7 +74,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                 if (temp.getFoodName().equals(orderInfo.getFoodName())) {
                     count++;
                 } else {
-                    exportOrderVo = new ExportOrderVo();
+                    exportOrderVo = new OrderExportVo();
                     BeanUtils.copyProperties(exportOrderVo, temp);
                     exportOrderVo.setCount(new BigDecimal(count));
                     exportOrderVo.setTotalPrice(new BigDecimal(count).multiply(temp.getPrice()));
@@ -84,7 +84,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
                     count = 1;
                 }
             } else {
-                exportOrderVo = new ExportOrderVo();
+                exportOrderVo = new OrderExportVo();
                 BeanUtils.copyProperties(exportOrderVo, temp);
                 exportOrderVo.setCount(new BigDecimal(count));
                 exportOrderVo.setTotalPrice(new BigDecimal(count).multiply(temp.getPrice()));
@@ -95,7 +95,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             }
 
             if (size == list.size()) {
-                exportOrderVo = new ExportOrderVo();
+                exportOrderVo = new OrderExportVo();
                 BeanUtils.copyProperties(exportOrderVo, temp);
                 exportOrderVo.setCount(new BigDecimal(count));
                 exportOrderVo.setTotalPrice(new BigDecimal(count).multiply(temp.getPrice()));
@@ -107,13 +107,13 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         return listVo;
     }
 
-    private void getFiledContexts(List<ExportOrderVo> listVo, List<List<String>> filedContexts, List<List<String>> footerContexts) {
+    private void getFiledContexts(List<OrderExportVo> listVo, List<List<String>> filedContexts, List<List<String>> footerContexts) {
         int size = 0;
         List<String> filedContext;
-        ExportOrderVo tempExport = listVo.get(0);
+        OrderExportVo tempExport = listVo.get(0);
         BigDecimal totalCount = new BigDecimal(0);
         BigDecimal totalAmount = new BigDecimal(0);
-        for (ExportOrderVo exportOrder : listVo) {
+        for (OrderExportVo exportOrder : listVo) {
             size++;
             if (!exportOrder.getRestaurantName().equals(tempExport.getRestaurantName())) {
                 filedContext = new ArrayList<>();
