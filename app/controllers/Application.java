@@ -24,7 +24,7 @@ public class Application extends Controller {
 
     public static Result login() {
         UserInfos userInfos = getUserInfos();
-        if (userInfos != null) {
+        if (userInfos != null && "sunlights035".equals(userInfos.getUserId())) {
             session().clear();
             session("user", userInfos.getUserId());
             session("userName", userInfos.getUserName());

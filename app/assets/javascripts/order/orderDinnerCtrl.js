@@ -52,6 +52,11 @@ var OrderDinnerCtrl = function ($modal, $scope, $http, $timeout, $location, Orde
             }, function (error) {
                 console.error("update to userInfo error : " + error.data);
             });
+
+            $scope.count = 0;
+            $scope.foods = [];
+            $scope.orgPrice = 0;
+            $scope.salePrice = 0;
         }
     };
 

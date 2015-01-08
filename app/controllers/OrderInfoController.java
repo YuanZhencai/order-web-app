@@ -123,7 +123,9 @@ public class OrderInfoController extends Controller {
     public Result exportDailyOrderList() {
         Logger.info("--------------export SettleAccounts start--------------");
         try {
-            String fileName = "当日订餐清单.xls";
+            PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
+            String createTime = getChkDateString(pageVo);
+            String fileName = "订餐清单"+ createTime +".xls";
             JFileChooser fd = new JFileChooser();
             fd.setSelectedFile(new File(fileName));
             int i = fd.showSaveDialog(null);
@@ -132,101 +134,7 @@ public class OrderInfoController extends Controller {
                 return ok();
             }
             String path = fd.getCurrentDirectory().getAbsolutePath();
-            PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
-
-            ExcelDemoVo excelDemoVo = service.queryDailyOrderList(getChkDateString(pageVo));
-
-//            List<String> filedName = new ArrayList<>();
-//            List<List<String>> filedContexts = new ArrayList<>();
-//            List<String> filedContext = new ArrayList<>();
-//            ExcelDemoVo excelDemoVo = new ExcelDemoVo();
-//            ExcelHeader header = new ExcelHeader();
-//            header.setSheetName("订单统计");
-//            header.setTitles("当日订餐清单");
-//            ExcelContainer container = new ExcelContainer();
-//            filedName.add("饭店名");
-//            filedName.add("菜肴名称");
-//            filedName.add("数量");
-//            filedName.add("单价");
-//            filedName.add("小计");
-//
-//            filedContext.add("金华快餐");
-//            filedContext.add("鱼香茄子");
-//            filedContext.add("1");
-//            filedContext.add("10");
-//            filedContext.add("10");
-//            filedContexts.add(filedContext);
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("");
-//            filedContext.add("红烧大排");
-//            filedContext.add("1");
-//            filedContext.add("10");
-//            filedContext.add("10");
-//            filedContexts.add(filedContext);
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContexts.add(filedContext);
-//
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("天天快餐");
-//            filedContext.add("鱼香茄子");
-//            filedContext.add("1");
-//            filedContext.add("10");
-//            filedContext.add("10");
-//            filedContexts.add(filedContext);
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("");
-//            filedContext.add("红烧大排");
-//            filedContext.add("1");
-//            filedContext.add("10");
-//            filedContext.add("10");
-//            filedContexts.add(filedContext);
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContext.add("");
-//            filedContexts.add(filedContext);
-//
-//            container.setFieldName(filedName);
-//            container.setFieldContext(filedContexts);
-//
-//
-//            ExcelFooter footer = new ExcelFooter();
-//            filedName = new ArrayList<>();
-//            filedName.add("总计");
-//            filedName.add("数量");
-//            filedName.add("总金额");
-//            filedContexts = new ArrayList<>();
-//            filedContext = new ArrayList<>();
-//            filedContext.add("金华快餐");
-//            filedContext.add("2");
-//            filedContext.add("46");
-//            filedContexts.add(filedContext);
-//
-//            filedContext = new ArrayList<>();
-//            filedContext.add("天天快餐");
-//            filedContext.add("2");
-//            filedContext.add("46");
-//            filedContexts.add(filedContext);
-//
-//            footer.setFieldName(filedName);
-//            footer.setFieldContext(filedContexts);
-//
-//
-//            excelDemoVo.setHeader(header);
-//            excelDemoVo.setContainer(container);
-//            excelDemoVo.setFooter(footer);
+            ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
             excelDemoVo.setFileName(path + "\\" + fileName);
             ExcelUtil.exportExcel(excelDemoVo);
             Logger.info("--------------export SettleAccounts end--------------");
