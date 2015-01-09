@@ -25,6 +25,15 @@ public interface OrderInfoService {
     public ExcelDemoVo queryDailyOrderList(String createTime) throws Exception;
 
     /**
+     * 获取每日订单明细（按用户排序）
+     *
+     * @param createTime
+     * @return
+     * @throws Exception
+     */
+    public ExcelDemoVo queryDailyOrderDetail(String createTime)throws Exception;
+
+    /**
      * 添加新订单
      *
      * @return

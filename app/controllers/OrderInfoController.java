@@ -118,33 +118,83 @@ public class OrderInfoController extends Controller {
     }
 
     /**
-     * 导出
+     * 导出订餐清单
+     *
+     * @return
      */
-    public Result exportDailyOrderList() {
-        Logger.info("--------------export SettleAccounts start--------------");
+    public Result exportDailyOrderListTotal() {
+        Logger.info(">>>>>>>>exportDailyOrderListTotal  start");
         try {
-            PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
-            String createTime = getChkDateString(pageVo);
+            String createTime = getCreateTimeStr();
             String fileName = "订餐清单"+ createTime +".xls";
-            JFileChooser fd = new JFileChooser();
-            fd.setSelectedFile(new File(fileName));
-            int i = fd.showSaveDialog(null);
-            if (i == 1) {
-                Logger.info("--------------export SettleAccounts cancel--------------");
+            String path = getSelectedFolderPath(fileName);
+            if(path == null){
+                Logger.info(">>>>>>>>exportDailyOrderListTotal  cancel");
                 return ok();
             }
-            String path = fd.getCurrentDirectory().getAbsolutePath();
-            ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
-            excelDemoVo.setFileName(path + "\\" + fileName);
-            ExcelUtil.exportExcel(excelDemoVo);
-            Logger.info("--------------export SettleAccounts end--------------");
+            exportToExcelForTotal(createTime, fileName, path);
+            Logger.info(">>>>>>>>exportDailyOrderListTotal  end");
             return ok();
         } catch (Exception e) {
-            Logger.error("订单信息查询失败；错误信息：" + e.getMessage());
+            Logger.error("exportDailyOrderListTotal error：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
         }
     }
-    private String getChkDateString(PageVo pageVo) throws Exception {
+
+    /**
+     * 导出订单明细
+     *
+     * @return
+     */
+    public Result exportDailyOrderListDetail() {
+        Logger.info(">>>>>>>>exportOrderListDetail  start");
+        try {
+            String createTime = getCreateTimeStr();
+            String fileName = "订餐明细"+ createTime +".xls";
+            String path = getSelectedFolderPath(fileName);
+            if(path == null){
+                Logger.info(">>>>>>>>exportOrderListDetail  cancel");
+                return ok();
+            }
+            exportToExcelForDetail(createTime, fileName, path);
+            Logger.info(">>>>>>>>exportOrderListDetail  end");
+            return ok();
+        } catch (Exception e) {
+            Logger.error("exportOrderListDetail error：" + e.getMessage());
+            return Controller.badRequest(SYSTEM_ERROR);
+        }
+    }
+
+    private String getSelectedFolderPath(String fileName) {
+        // select the folder directory
+        JFileChooser fd = new JFileChooser();
+        fd.setSelectedFile(new File("C:\\Users\\Administrator\\Desktop\\" + fileName));
+        int i = fd.showSaveDialog(null);
+        // o:selected  1:unselected
+        String path = null;
+        if (i == 0) {
+            path = fd.getCurrentDirectory().getAbsolutePath();
+        }
+        return path;
+    }
+    private void exportToExcelForTotal(String createTime, String fileName, String path) throws Exception {
+        // query order list to set exportVo
+        ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
+        excelDemoVo.setFileName(path + "\\" + fileName);
+        // export order list to excel
+        ExcelUtil.exportExcel(excelDemoVo);
+    }
+
+    private void exportToExcelForDetail(String createTime, String fileName, String path) throws Exception {
+        // query order list to set exportVo
+        ExcelDemoVo excelDemoVo = service.queryDailyOrderDetail(createTime);
+        excelDemoVo.setFileName(path + "\\" + fileName);
+        // export order list to excel
+        ExcelUtil.exportExcel(excelDemoVo);
+    }
+
+    private String getCreateTimeStr() throws Exception {
+        PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
         String chkDate = ((String) pageVo.getFilter().get("createTime")).substring(0, 10);
         Date date = CommonUtil.stringToDate(chkDate);
         Calendar cal = Calendar.getInstance();

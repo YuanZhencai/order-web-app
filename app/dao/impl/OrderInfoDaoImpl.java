@@ -15,7 +15,7 @@ import java.util.List;
  * Created by guxuelong on 2014/12/26.
  */
 public class OrderInfoDaoImpl extends EntityBaseDao implements OrderInfoDao {
-    private static final String QUERY_ORDER_ALL = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.delFlg = 'N'";
+    private static final String QUERY_ORDER_ALL = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.delFlg = 'N' order by userName,source,foodName";
     private static final String QUERY_ORDER_BY_USER_NM = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.delFlg = 'N' order by source,foodName";
     private static final String QUERY_ORDER = "select t from OrderInfo t where t.createTime >= :timeStart  and t.createTime <= :timeEnd and t.userName = :userName and t.delFlg = 'N'";
     public static final String START_TIME = " 00:00:00";

@@ -1,13 +1,14 @@
 package common.vo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by guxuelong on 2015/1/7.
  */
 public class ExcelFooter {
-    private List<String> fieldName;
-    private List<List<String>> fieldContext;
+    private List<String> fieldName = new ArrayList<>();
+    private List<List<String>> fieldContext = new ArrayList<>();;
 
     public List<String> getFieldName() {
         return fieldName;

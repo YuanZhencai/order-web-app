@@ -22,15 +22,27 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
         });
     };
 
-    OrderCtrl.prototype.exportDailyOrderList = function () {
+    OrderCtrl.prototype.exportDailyTotal = function () {
         console.debug("findResult()");
-        return OrderService.exportDailyOrderList($scope.pager).then((function (data) {
+        return OrderService.exportDailyTotal($scope.pager).then((function (data) {
             console.debug("Promise returned " + data.length + " banks");
         }), function (error) {
             console.error("Unable to get activities: " + error);
             $scope.error = error;
         });
     };
+
+    OrderCtrl.prototype.exportDailyDetail = function () {
+        console.debug("findResult()");
+        return OrderService.exportDailyDetail($scope.pager).then((function (data) {
+            console.debug("Promise returned " + data.length + " banks");
+        }), function (error) {
+            console.error("Unable to get activities: " + error);
+            $scope.error = error;
+        });
+    };
+
+
     $scope.open = function (row) {
         $modal.open({
             templateUrl: "OrderModalContent.html",
