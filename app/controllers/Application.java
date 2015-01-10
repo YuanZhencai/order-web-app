@@ -7,6 +7,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
+import play.mvc.Http;
 import play.mvc.Result;
 import views.html.index;
 import views.html.login;
@@ -23,7 +24,7 @@ public class Application extends Controller {
     }
 
     public static Result login() {
-        UserInfos userInfos = getUserInfos();
+        UserInfos userInfos = getUserInfo();
         if (userInfos != null && "sunlights035".equals(userInfos.getUserId())) {
             session().clear();
             session("user", userInfos.getUserId());
@@ -48,6 +49,21 @@ public class Application extends Controller {
             return Controller.badRequest("用户名密码错误");
         }
 
+    }
+
+    private static UserInfos getUserInfo() {
+        UserVo userVo = null;
+
+        Http.RequestBody body = request().body();
+        if (body.asFormUrlEncoded() != null) {
+            userVo = userForm.bindFromRequest().get();
+        }
+        UserInfos userInfo = new UserInfos();
+        userInfo.setUserId(userVo.getUsername());
+        userInfo.setPassword(userVo.getPassword());
+        UserInfoDao dao = new UserInfoDaoImpl();
+        UserInfos userInfos = dao.verify(userInfo);
+        return userInfos;
     }
 
     private static UserInfos getUserInfos() {
