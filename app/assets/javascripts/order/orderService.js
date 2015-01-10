@@ -11,6 +11,19 @@ var OrderService = function ($http, $q) {
     };
 
 
+    OrderService.prototype.register = function (pager) {
+        var deferred;
+        console.debug("OrderService()");
+        deferred = $q.defer();
+        $http.post("/addUserInfo", pager).then(function (data, status) {
+            console.info("Successfully find OrderResult - status " + data);
+            return deferred.resolve(data);
+        }, function (data, status) {
+            console.error("Failed to find OrderResult - status " + status);
+            return deferred.reject(data);
+        });
+        return deferred.promise;
+    };
 
     OrderService.prototype.login = function (pager) {
         var deferred;

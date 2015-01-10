@@ -3,6 +3,7 @@ import dao.UserInfoDao;
 import dao.impl.UserInfoDaoImpl;
 import models.UserInfos;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import service.UserInfoService;
 import vo.UserInfoVo;
@@ -48,10 +49,12 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfos userinfo = new UserInfos();
         BeanUtils.copyProperties(userinfo,userInfoVo);
         if(dao.isExist(userinfo)){
-            throw new Exception("用户已存在");
+            throw new Exception("用户名或者邮箱已注册！");
+        }
+        if(StringUtils.isEmpty(userinfo.getPassword())){
+            userinfo.setPassword("sunlights");
         }
         userinfo.setDelFlg("N");
-        userinfo.setPassword("sunlights");
         userinfo.setCreateBy("sunlights");
         userinfo.setCreateTime(new DateTime().toDate());
         userinfo.setUpdateBy("sunlights");

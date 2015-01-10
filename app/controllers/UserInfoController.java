@@ -49,6 +49,8 @@ public class UserInfoController extends Controller {
         try{
             UserInfoVo userInfoVo = Json.fromJson(request().body().asJson(), UserInfoVo.class);
             Long id = service.add(userInfoVo);
+            session("user", userInfoVo.getUserId());
+            session("userName", userInfoVo.getUserName());
             return ok(Json.toJson(id));
         }catch(Exception e){
             Logger.error("用户信息查询失败；错误信息：" + e.getMessage());

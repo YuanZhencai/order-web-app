@@ -99,6 +99,10 @@ public class UserInfoDaoImpl extends EntityBaseDao implements UserInfoDao{
         if(userList!=null && !userList.isEmpty() && "N".equals(userList.get(0).getDelFlg())){
             return true;
         }
+        userList = (List<UserInfos>) findBy(UserInfos.class,"userId",userInfo.getUserId());
+        if(userList!=null && !userList.isEmpty() && "N".equals(userList.get(0).getDelFlg())){
+            return true;
+        }
         return false;
     }
 

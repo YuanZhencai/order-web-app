@@ -1,6 +1,5 @@
 var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $location, OrderService) {
 
-
     $scope.orderInfo = {
         count:0,
         orgPrice : 0,
@@ -33,6 +32,30 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
         $scope.orderInfo.showCart = false;
         $scope.orderInfo.showList = false;
         $scope.orderInfo.showLogin = true;
+    };
+
+    OrderDinnerCtrl.prototype.register = function () {
+        console.debug("register()");
+        if($scope.userInfo.password != $scope.userInfo.passwordConfirm){
+            $scope.errormsg = "两次输入密码不一致！";
+            return;
+        }
+
+        return OrderService.register($scope.userInfo).then((function (data) {
+            $scope.orderInfo.userName = $scope.userInfo.userName;
+            $scope.orderInfo.loginFlg = true;
+            $scope.orderInfo.showLogin = false;
+            $scope.orderInfo.showCart = true;
+            $scope.orderInfo.showList = false;
+            if($scope.orderInfo.orgFlg){
+                $scope.orderInfo.showCart = false;
+                $scope.orderInfo.showList = true;
+            }
+        }), function (error) {
+            $scope.orderInfo.loginFlg = false;
+            console.error("register error: " + error.data);
+            $scope.errormsg = error.data;
+        });
     };
 
     OrderDinnerCtrl.prototype.login = function () {
