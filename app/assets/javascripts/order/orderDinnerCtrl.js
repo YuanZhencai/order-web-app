@@ -2,11 +2,39 @@ var OrderDinnerCtrl = function ($modal, $scope, $http, $timeout, $location, Orde
     $scope.count = 0;
     $scope.orgPrice = 0;
     $scope.salePrice = 0;
-    $scope.showCart = true;
-    $scope.foods = [];
+    $scope.showCart = false;
+    $scope.showList = true;
+    $scope.showLogin = false;
 
-    $scope.pageUrl = "/findMenuInfo";
+    $scope.foods = [];
+    if(!$scope.userName){
+        $scope.userName = "";
+        $scope.loginFlg = false;
+    }
+
+
+    $scope.pageUrl = "/findFood";
     new PageService($scope, $http, $timeout);
+
+
+
+    OrderDinnerCtrl.prototype.login = function () {
+        console.debug("login()");
+        return OrderService.login($scope.user).then((function (data) {
+            $scope.userName = data.data;
+            $scope.loginFlg = true;
+            $scope.showCart = true;
+            $scope.showList = false;
+            $scope.showLogin = false;
+        }), function (error) {
+            $scope.loginFlg = false;
+            $scope.userName = "";
+            console.error("Unable to get activities: " + error);
+            $scope.error = error;
+        });
+    };
+
+
 
     $scope.addFood = function (food) {
         var foodTemp = {
@@ -45,7 +73,15 @@ var OrderDinnerCtrl = function ($modal, $scope, $http, $timeout, $location, Orde
     };
 
     $scope.confirmOrder = function () {
+        if(!$scope.loginFlg){
+            $scope.showCart = false;
+            $scope.showList = false;
+            $scope.showLogin = true;
+            return;
+        }
+
         if (confirm('您确实要提交订单吗？')) {
+
             $scope.pager.list = $scope.foods;
             OrderService.add($scope.pager).then(function (data) {
                 console.info("add to userInfo successfully : " + data);
@@ -61,12 +97,16 @@ var OrderDinnerCtrl = function ($modal, $scope, $http, $timeout, $location, Orde
     };
 
     OrderDinnerCtrl.prototype.showCart = function () {
-        $scope.showCart = false;
+        $scope.showCart = true;
+        $scope.showList = false;
     };
 
     OrderDinnerCtrl.prototype.hideCart = function () {
-        $scope.showCart = true;
+        $scope.showCart = false;
+        $scope.showList = true;
     };
+
+
 
     OrderDinnerCtrl.prototype.findResult = function () {
         console.debug("findResult()");

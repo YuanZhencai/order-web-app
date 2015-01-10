@@ -5,8 +5,8 @@ import dao.impl.UserInfoDaoImpl;
 import models.UserInfos;
 import play.data.Form;
 import play.db.jpa.Transactional;
+import play.libs.Json;
 import play.mvc.Controller;
-import play.mvc.Http;
 import play.mvc.Result;
 import views.html.index;
 import views.html.login;
@@ -36,24 +36,22 @@ public class Application extends Controller {
     }
 
     public static Result orderLogin() {
+
         UserInfos userInfos = getUserInfos();
         if (userInfos != null) {
             session().clear();
+            session("loginType", "order");
             session("user", userInfos.getUserId());
             session("userName", userInfos.getUserName());
-            return ok(order.render("",userInfos.getUserName()));
+            return ok(userInfos.getUserName());
         } else {
-            return ok(orderLogin.render("登录失败：用户名密码错误！！！"));
+            return Controller.badRequest("用户名密码错误");
         }
 
     }
 
     private static UserInfos getUserInfos() {
-        UserVo userVo = new UserVo();
-        Http.RequestBody body = request().body();
-        if (body.asFormUrlEncoded() != null) {
-            userVo = userForm.bindFromRequest().get();
-        }
+        UserVo userVo = Json.fromJson(request().body().asJson(), UserVo.class);
         UserInfos userInfo = new UserInfos();
         userInfo.setUserId(userVo.getUsername());
         userInfo.setPassword(userVo.getPassword());
@@ -63,13 +61,20 @@ public class Application extends Controller {
     }
 
     public static Result logout() {
+
+        if("order".equals(session().get("loginType"))){
+            session().clear();
+            return ok(orderLogin.render(""));
+        }
         session().clear();
         return ok(login.render(""));
     }
 
     public static Result order() {
-        return ok(order.render("",session().get("userName")));
+        session("loginType", "order");
+        if(session().get("userName") != null ) {
+            return ok(order.render("", session().get("userName")));
+        }
+        return ok(order.render("", ""));
     }
-
-
 }
