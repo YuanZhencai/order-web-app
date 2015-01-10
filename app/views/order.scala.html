@@ -30,9 +30,9 @@
                         <font id="ECS_MEMBERZONE">
 
                         欢迎光临本店，
-                            <span ng-hide="loginFlg">请<a href="logout">登录</a></span>
+                            <span ng-hide="orderInfo.loginFlg">请<a href="" ng-click="oc.tologin()">登录</a></span>
 
-                            <span ng-show="loginFlg">{{userName}} | <a href="logout">注销</a></span>
+                            <span ng-show="orderInfo.loginFlg">{{orderInfo.userName}} | <a href="" ng-click="oc.logout()">注销</a></span>
 
                         </font>
                     </div>
@@ -61,29 +61,29 @@
                     </ul>
                     <a href="" ng-click="oc.showCart()" title="查看购物车">
                     <div id="menuCart" class="shooping_car">
-                        <span>{{count}} </span> </div>
+                        <span>{{orderInfo.count}} </span> </div>
                     </a>
                 </div>
 
-                <div class="block clearfix" style="margin-top : 10px;"  ng-show="showList">
+                <div class="block clearfix" style="margin-top : 10px;"  ng-show="orderInfo.showList">
                     <div>
                         <div class="sale_box clearfix">
                             <div class="tit"><span>15元套餐</span></div>
                             <div class="clearfix">
                                 <ul class="clearfix" ng-repeat="result in myData  | filter:{'priceScope': '15'} | filter:{'foodType': '主菜'} | orderBy:'price'">
                                     <li class="goodsimg">
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/4.jpg" border="0" alt="123" class="B_blue">
                                         </a>
                                     </li>
                                     <li class="goodsimgDesc">
                                         <p>
-                                            <a href="" ng-click="addFood(result)" title="{{result.foodName}}">
+                                            <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}">
                                                 <span class="redBold">{{result.foodName}}</span>
                                             </a>
                                             价格：<font class="f1">{{result.priceStr}}元</font>
                                         </p>
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/goumai2.gif">
                                         </a>
                                     </li>
@@ -97,18 +97,18 @@
                             <div class="clearfix">
                                 <ul class="clearfix" ng-repeat="result in myData  | filter:{'priceScope': '20'} | filter:{'foodType': '主菜'} | orderBy:'price'">
                                     <li class="goodsimg">
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/4.jpg" border="0" alt="" class="B_blue">
                                         </a>
                                     </li>
                                     <li class="goodsimgDesc">
                                         <p>
-                                            <a href="" ng-click="addFood(result)" title="{{result.foodName}}">
+                                            <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}">
                                                 <span class="redBold">{{result.foodName}}</span>
                                             </a>
                                             价格：<font class="f1">{{result.priceStr}}元</font>
                                         </p>
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/goumai2.gif">
                                         </a>
                                     </li>
@@ -122,18 +122,18 @@
                             <div class="clearfix">
                                 <ul class="clearfix" ng-repeat="result in myData  | filter:{'priceScope': '25'} | filter:{'foodType': '主菜'} | orderBy:'price'">
                                     <li class="goodsimg">
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/4.jpg" border="0" alt="" class="B_blue">
                                         </a>
                                     </li>
                                     <li class="goodsimgDesc">
                                         <p>
-                                            <a href="" ng-click="addFood(result)" title="{{result.foodName}}">
+                                            <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}">
                                                 <span class="redBold">{{result.foodName}}</span>
                                             </a>
                                             价格：<font class="f1">{{result.priceStr}}元</font>
                                         </p>
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/goumai2.gif">
                                         </a>
                                     </li>
@@ -146,18 +146,18 @@
                             <div class="clearfix">
                                 <ul class="clearfix" ng-repeat="result in myData  | filter:{'priceScope': '30'} | filter:{'foodType': '主菜'} | orderBy:'price'">
                                     <li class="goodsimg">
-                                        <a href="" ng-click="addFood(result)">
+                                        <a href="" ng-click="oc.addFood(result)">
                                             <img src="assets/images/4.jpg" border="0" alt="" class="B_blue">
                                         </a>
                                     </li>
                                     <li class="goodsimgDesc">
                                         <p>
-                                            <a href="" ng-click="addFood(result)" title="{{result.foodName}}">
+                                            <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}">
                                                 <span class="redBold">{{result.foodName}}</span>
                                             </a>
                                             价格：<font class="f1">{{result.priceStr}}元</font>
                                         </p>
-                                        <a href="assets/images/4.jpg" ng-click="addFood(result)">
+                                        <a href="assets/images/4.jpg" ng-click="oc.addFood(result)">
                                             <img src="assets/images/goumai2.gif">
                                         </a>
                                     </li>
@@ -174,16 +174,16 @@
                             <div class="blank"></div>
                             <div id="show_hot_area" class="clearfix" ng-repeat="result in myData  | filter:{'foodType': '辅菜'} | orderBy:'price'">
                                 <div class="goodsItem text-center">
-                                    <a href="" ng-click="addFood(result)">
+                                    <a href="" ng-click="oc.addFood(result)">
                                         <img src="assets/images/1.jpg" alt="" class="goodsimg">
                                     </a><br>
                                     <p style="text-align: center;">
-                                        <a href="" ng-click="addFood(result)" title="{{result.foodName}}" class="redBold" >
+                                        <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}" class="redBold" >
                                             {{result.foodName}}
                                         </a>
                                         价格：<font class="f1">{{result.priceStr}}元</font>
                                     </p>
-                                    <a href="" ng-click="addFood(result)">
+                                    <a href="" ng-click="oc.addFood(result)">
                                         <img src="assets/images/goumai2.gif">
                                     </a>
                                 </div>
@@ -198,16 +198,16 @@
                             <div class="blank"></div>
                             <div id="show_hot_area" class="clearfix" ng-repeat="result in myData  | filter:{'foodType': '汤类'} | orderBy:'price'">
                                 <div class="goodsItem text-center">
-                                    <a href="" ng-click="addFood(result)">
+                                    <a href="" ng-click="oc.addFood(result)">
                                         <img src="assets/images/1.jpg" alt="" class="goodsimg">
                                     </a><br>
                                     <p style="text-align: center;">
-                                        <a href="" ng-click="addFood(result)" title="{{result.foodName}}" class="redBold" >
+                                        <a href="" ng-click="oc.addFood(result)" title="{{result.foodName}}" class="redBold" >
                                             {{result.foodName}}
                                         </a>
                                         价格：<font class="f1">{{result.priceStr}}元</font>
                                     </p>
-                                    <a href="" ng-click="addFood(result)">
+                                    <a href="" ng-click="oc.addFood(result)">
                                         <img src="assets/images/goumai2.gif">
                                     </a>
                                 </div>
@@ -217,7 +217,7 @@
                     <div class="foot_add">
                     </div>
                 </div>
-                <div class="block table " ng-show="showCart">
+                <div class="block table " ng-show="orderInfo.showCart">
                     <div class="flowBox">
                         <h6><span>商品列表</span></h6>
                         <form id="formCart" name="formCart" method="post" action="flow.php">
@@ -232,7 +232,7 @@
                                         <th bgcolor="#ffffff">小计</th>
                                         <th bgcolor="#ffffff">操作</th>
                                     </tr>
-                                    <tr ng-repeat="food in foods">
+                                    <tr ng-repeat="food in orderInfo.foods">
                                         <td bgcolor="#ffffff" align="center" style="width:300px;">
                                             <a href="goods.php?id=214" target="_blank"><img style="width:80px; height:80px;" src="" border="0" title="泰国龙眼2斤装"></a><br>
                                             <a href="goods.php?id=214" target="_blank" class="f6">{{food.foodName}}</a>
@@ -245,22 +245,22 @@
                                         </td>
                                         <td align="center" bgcolor="#ffffff">{{food.priceStr}}元</td>
                                         <td align="center" bgcolor="#ffffff">
-                                            <a href="" ng-click="deleteFood(food)" class="f6">删除</a>
+                                            <a href="" ng-click="oc.deleteFood(food)" class="f6">删除</a>
                                         </td>
                                     </tr>
-                                    <tr ng-hide="foods.length">
+                                    <tr ng-hide="orderInfo.foods.length">
                                         <td colspan="7">
                                             <p class="text-center">空空如也</p>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
-                            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" ng-show="foods.length">
+                            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd" ng-show="orderInfo.foods.length">
                                 <tbody><tr>
                                     <td bgcolor="#ffffff">
-                                        购物金额小计 {{salePrice}}元，比市场价 {{orgPrice}}元 节省了 {{orgPrice-salePrice}}元 ({{(orgPrice-salePrice)/orgPrice*100}}%)              </td>
+                                        购物金额小计 {{orderInfo.salePrice}}元，比市场价 {{orderInfo.orgPrice}}元 节省了 {{orderInfo.orgPrice-orderInfo.salePrice}}元 ({{(orderInfo.orgPrice-orderInfo.salePrice)/orderInfo.orgPrice*100}}%)              </td>
                                     <td align="right" bgcolor="#ffffff">
-                                        <input type="button" value="清空购物车" class="bnt_blue_1" ng-click="clearFoods()">
+                                        <input type="button" value="清空购物车" class="bnt_blue_1" ng-click="oc.clearFoods()">
                                         <input  type="button" class="bnt_blue_1" value="更新购物车">
                                     </td>
                                 </tr>
@@ -270,14 +270,14 @@
                         <table width="99%" align="center" border="0" cellpadding="5" cellspacing="0" bgcolor="#dddddd">
                             <tbody><tr>
                                 <td bgcolor="#ffffff"><a href="" ng-click="oc.hideCart()"><img src="assets/images/continue.gif" alt="continue"></a></td>
-                                <td bgcolor="#ffffff" align="right"><a href="" ng-click="confirmOrder()"><img src="assets/images/checkout.gif" alt="checkout"></a></td>
+                                <td bgcolor="#ffffff" align="right"><a href="" ng-click="oc.confirmOrder()"><img src="assets/images/checkout.gif" alt="checkout"></a></td>
                             </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="block table " ng-show="showLogin">
+                <div class="block table " ng-show="orderInfo.showLogin">
                     <div class="flowBox" style="border : none ; border-top : 1px solid #ddd">
                         <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                             <tbody><tr>
@@ -293,12 +293,12 @@
                                                     <td bgcolor="#ffffff"><div align="right"><strong>密码</strong></div></td>
                                                     <td bgcolor="#ffffff"><input name="password" class="inputBg input-left" ng-model="user.password" type="password"></td>
                                                 </tr>
-                                                <tr>
-                                                    <td bgcolor="#ffffff"><div align="right"><strong>
-                                                        验证码:</strong></div></td>
-                                                    <td bgcolor="#ffffff"><input type="text" size="8" name="captcha" class="inputBg input-left">
-                                                        <img src="captcha.php?is_login=1&amp;279161614" alt="captcha" style="vertical-align : middle ; cursor : pointer ;" onclick="this.src = 'captcha.php?is_login=1&amp;' + Math.random ( )"> </td>
-                                                </tr>
+                                                @*<tr>*@
+                                                    @*<td bgcolor="#ffffff"><div align="right"><strong>*@
+                                                        @*验证码:</strong></div></td>*@
+                                                    @*<td bgcolor="#ffffff"><input type="text" size="8" name="captcha" class="inputBg input-left">*@
+                                                        @*<img src="captcha.php?is_login=1&amp;279161614" alt="captcha" style="vertical-align : middle ; cursor : pointer ;" onclick="this.src = 'captcha.php?is_login=1&amp;' + Math.random ( )"> </td>*@
+                                                @*</tr>*@
                                                 <tr>
                                                     <td bgcolor="#ffffff" ></td><td bgcolor="#ffffff"><input type="checkbox" class="input-left"value="1"  name="remember" id="remember"><label class="input-left"for="remember">
                                                     请保存我这次的登录信息。</label></td>
@@ -327,8 +327,8 @@
                                         <table width="98%" border="0" cellpadding="8" cellspacing="0" bgcolor="#B0D8FF" class="table">
                                             <tbody><tr>
                                                 <td bgcolor="#ffffff" align="right" width="25%"><strong>用户名</strong></td>
-                                                <td bgcolor="#ffffff"><input name="username" type="text" class="inputBg input-left" id="username" onblur="is_registered ( this.value ) ;"><br>
-                                                    <span id="username_notice" style="color : #FF0000"></span></td>
+                                                <td bgcolor="#ffffff"><input name="userName" type="text" class="inputBg input-left" id="userName" onblur="is_registered ( this.value ) ;"><br>
+                                                    <span id="orderInfo.userName_notice" style="color : #FF0000"></span></td>
                                             </tr>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right"><strong>电子邮件地址</strong></td>
@@ -345,11 +345,11 @@
                                                     <td bgcolor="#ffffff"><input name="confirm_password" class="inputBg input-left" type="password" id="confirm_password" onblur="check_conform_password ( this.value ) ;"><br>
                                                         <span style="color : #FF0000" id="conform_password_notice"></span></td>
                                                 </tr>
-                                                <tr>
-                                                    <td bgcolor="#ffffff" align="right"><strong>验证码:</strong></td>
-                                                    <td bgcolor="#ffffff"><input type="text" size="8" name="captcha" class="inputBg input-left">
-                                                        <img src="captcha.php?279161614" alt="captcha" style="vertical-align : middle ; cursor : pointer ;" onclick="this.src = 'captcha.php?' + Math.random ( )"> </td>
-                                                </tr>
+                                                @*<tr>*@
+                                                    @*<td bgcolor="#ffffff" align="right"><strong>验证码:</strong></td>*@
+                                                    @*<td bgcolor="#ffffff"><input type="text" size="8" name="captcha" class="inputBg input-left">*@
+                                                        @*<img src="captcha.php?279161614" alt="captcha" style="vertical-align : middle ; cursor : pointer ;" onclick="this.src = 'captcha.php?' + Math.random ( )"> </td>*@
+                                                @*</tr>*@
                                                 <tr>
                                                     <td colspan="2" bgcolor="#ffffff" align="center">
                                                         <input type="submit" name="Submit" class="bnt_blue_1" value="注册新用户">
