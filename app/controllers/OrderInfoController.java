@@ -5,6 +5,7 @@ import common.util.ExcelUtil;
 import common.vo.ExcelDemoVo;
 import common.vo.PageVo;
 import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.ConvertUtils;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.libs.Json;
@@ -16,10 +17,9 @@ import vo.OrderInfoVo;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static play.data.Form.form;
 
 /**
  * Created by guxuelong on 2014/12/27.
@@ -129,7 +129,16 @@ public class OrderInfoController extends Controller {
     public Result exportDailyOrderListTotal() {
         Logger.info(">>>>>>>>exportDailyOrderListTotal  start");
         try {
-            String createTime = getCreateTimeStr();
+            PageVo pageVo = new PageVo();
+            Map<String, String> params = form().bindFromRequest().data();
+            Iterator iterator = params.keySet().iterator();
+            while (iterator.hasNext()) {
+                String key = (String)iterator.next();
+                pageVo.put(key, ConvertUtils.convert(params.get(key), String.class));
+            }
+            String createTime = (String)pageVo.get("createTime");
+
+            //String createTime = getCreateTimeStr();
             String fileName = "订餐清单"+ createTime +".xls";
             String path = "C:\\Users\\Administrator\\Desktop\\";
             if(path == null){
