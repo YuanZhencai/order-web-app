@@ -12,12 +12,12 @@
                 <br>
                 <alert class="{{alertClass}}" close="removeAlert()">{{msg}}</alert>
             </div>
-            <form class="form-inline" role="form" name="myForm" action="/exportDailyTotal" method="post">
+            <form class="form-inline" role="form" name="myForm" action="{{action}}" method="post">
             <label class="control-label">对账日期：</label>
             <input name="createTime" ng-enter="uc.findResult()" ui-date
                    required ng-model="queryRule.filterText.createTime">
             <div class="form-group" align="right">
-                <button class="btn btn-primary submit" ng-disabled="myForm.createTime.$invalid" type="submit">订餐清单</button>
+                <button class="btn btn-primary submit" ng-disabled="myForm.createTime.$invalid"  type="submit" ng-click="uc.exportDailyTotal()">订餐清单</button>
                 <button class="btn btn-primary submit" ng-disabled="myForm.createTime.$invalid" type="submit"  ng-click="uc.exportDailyDetail()">订单明细</button>
             </div>
             </form>

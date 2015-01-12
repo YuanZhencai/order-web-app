@@ -15,7 +15,6 @@ import service.OrderInfoService;
 import service.impl.OrderInfoServiceImpl;
 import vo.OrderInfoVo;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.*;
 
@@ -129,25 +128,10 @@ public class OrderInfoController extends Controller {
     public Result exportDailyOrderListTotal() {
         Logger.info(">>>>>>>>exportDailyOrderListTotal  start");
         try {
-            PageVo pageVo = new PageVo();
-            Map<String, String> params = form().bindFromRequest().data();
-            Iterator iterator = params.keySet().iterator();
-            while (iterator.hasNext()) {
-                String key = (String)iterator.next();
-                pageVo.put(key, ConvertUtils.convert(params.get(key), String.class));
-            }
-            String createTime = (String)pageVo.get("createTime");
-
-            //String createTime = getCreateTimeStr();
+            String createTime = getCreateTimeStr();
             String fileName = "订餐清单"+ createTime +".xls";
-            String path = "C:\\Users\\Administrator\\Desktop\\";
-            if(path == null){
-                Logger.info(">>>>>>>>exportDailyOrderListTotal  cancel");
-                return ok();
-            }
-            response().setContentType("application/vnd.ms-excel;charset=UTF-8");
-            response().setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
-            File chunks = exportToExcelForTotal(createTime, fileName, path);
+            setResponse(fileName);
+            File chunks = exportToExcelForTotal(createTime, fileName);
             Logger.info(">>>>>>>>exportDailyOrderListTotal  end");
             return ok(chunks);
         } catch (Exception e) {
@@ -165,15 +149,9 @@ public class OrderInfoController extends Controller {
         Logger.info(">>>>>>>>exportOrderListDetail  start");
         try {
             String createTime = getCreateTimeStr();
-            String fileName = "订餐明细"+ createTime +".xls";
-            String path = "";
-            if(path == null){
-                Logger.info(">>>>>>>>exportOrderListDetail  cancel");
-                return ok();
-            }
-            response().setContentType("application/x-excel");//可选择不同类型
-            response().setHeader("Content-Disposition", "attachment; filename=" + fileName);
-            File chunks =  exportToExcelForDetail(createTime, fileName, path);
+            String fileName = "订单明细"+ createTime +".xls";
+            setResponse(fileName);
+            File chunks =  exportToExcelForDetail(createTime, fileName);
             Logger.info(">>>>>>>>exportOrderListDetail  end");
             return ok(chunks);
         } catch (Exception e) {
@@ -182,42 +160,36 @@ public class OrderInfoController extends Controller {
         }
     }
 
-    private String getSelectedFolderPath(String fileName) {
-        // select the folder directory
-        JFileChooser fd = new JFileChooser();
-        fd.setSelectedFile(new File("C:\\Users\\Administrator\\Desktop\\" + fileName));
-        int i = fd.showSaveDialog(null);
-        // o:selected  1:unselected
-        String path = null;
-        if (i == 0) {
-            path = fd.getCurrentDirectory().getAbsolutePath();
-        }
-        return path;
+    private void setResponse(String fileName) throws Exception{
+        response().setContentType("application/x-excel;charset=UTF-8");//可选择不同类型
+        response().setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
+
     }
-    private  File exportToExcelForTotal(String createTime, String fileName, String path) throws Exception {
+
+    private  File exportToExcelForTotal(String createTime, String fileName) throws Exception {
         // query order list to set exportVo
         ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
-        excelDemoVo.setFileName(path + "\\" + fileName);
+        excelDemoVo.setFileName(fileName);
         // export order list to excel
         return ExcelUtil.exportExcel(excelDemoVo);
     }
 
-    private File exportToExcelForDetail(String createTime, String fileName, String path) throws Exception {
+    private File exportToExcelForDetail(String createTime, String fileName) throws Exception {
         // query order list to set exportVo
         ExcelDemoVo excelDemoVo = service.queryDailyOrderDetail(createTime);
-        excelDemoVo.setFileName(path + "\\" + fileName);
+        excelDemoVo.setFileName(fileName);
         // export order list to excel
         return ExcelUtil.exportExcel(excelDemoVo);
     }
 
     private String getCreateTimeStr() throws Exception {
-        PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
-        String chkDate = ((String) pageVo.getFilter().get("createTime")).substring(0, 10);
-        Date date = CommonUtil.stringToDate(chkDate);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        cal.add(Calendar.DATE, 1);
-        chkDate = CommonUtil.dateToString(cal.getTime());
-        return chkDate;
+        PageVo pageVo = new PageVo();
+        Map<String, String> params = form().bindFromRequest().data();
+        Iterator iterator = params.keySet().iterator();
+        while (iterator.hasNext()) {
+            String key = (String)iterator.next();
+            pageVo.put(key, ConvertUtils.convert(params.get(key), String.class));
+        }
+        return (String)pageVo.get("createTime");
     }
 }

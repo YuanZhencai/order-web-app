@@ -10,7 +10,7 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
     $scope.pageUrl = "/findOrderInfo";
     new PageService($scope, $http, $timeout);
     $scope.alertFlag = false;
-
+    $scope.action = "/exportDailyTotal";
     $scope.editRow = function (row) {
         $scope.open(row);
 
@@ -25,47 +25,11 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
     };
 
     OrderCtrl.prototype.exportDailyTotal = function () {
-        console.debug("findResult()");
-        return OrderService.exportDailyTotal($scope.pager).then((function (data) {
-            console.debug("Promise returned " + data.length + " banks");
-
-            $scope.alertFlag = true;
-            $scope.msg = "文件导出成功，已导出至桌面。";
-            $scope.alertClass = "alert-warning";
-            $timeout(function(){
-                $scope.alertFlag = false;
-            }, [2000], []);
-
-        }), function (error) {
-            console.error("Unable to get activities: " + error);
-            $scope.alertFlag = true;
-            $scope.msg = error.data;
-            $scope.alertClass = "alert-danger";
-            $timeout(function(){
-                $scope.alertFlag = false;
-            }, [2000], []);
-        });
+        $scope.action = "/exportDailyTotal";
     };
 
     OrderCtrl.prototype.exportDailyDetail = function () {
-        console.debug("findResult()");
-        return OrderService.exportDailyDetail($scope.pager).then((function (data) {
-            console.debug("Promise returned " + data.length + " banks");
-            $scope.alertFlag = true;
-            $scope.msg = "文件导出成功，已导出至桌面。";
-            $scope.alertClass = "alert-warning";
-            $timeout(function(){
-                $scope.alertFlag = false;
-            }, [2000], []);
-        }), function (error) {
-            console.error("Unable to get activities: " + error);
-            $scope.alertFlag = true;
-            $scope.msg = error.data;
-            $scope.alertClass = "alert-danger";
-            $timeout(function(){
-                $scope.alertFlag = false;
-            }, [2000], []);
-        });
+        $scope.action = "/exportDailyDetail";
     };
 
 
