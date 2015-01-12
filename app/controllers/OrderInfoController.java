@@ -157,13 +157,13 @@ public class OrderInfoController extends Controller {
         try {
             String createTime = getCreateTimeStr();
             String fileName = "订餐明细"+ createTime +".xls";
-            String path = "C:\\Users\\Administrator\\Desktop\\";
+            String path = "";
             if(path == null){
                 Logger.info(">>>>>>>>exportOrderListDetail  cancel");
                 return ok();
             }
-            response().setContentType("application/vnd.ms-excel;charset=UTF-8");
-            response().setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
+            response().setContentType("application/x-excel");//可选择不同类型
+            response().setHeader("Content-Disposition", "attachment; filename=" + fileName);
             File chunks =  exportToExcelForDetail(createTime, fileName, path);
             Logger.info(">>>>>>>>exportOrderListDetail  end");
             return ok(chunks);
