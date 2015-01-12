@@ -47,6 +47,9 @@ public class BasicAuthenticationFilter implements EssentialFilter {
                     }
                     return Done.apply(ok(login.render("")).toScala(), null);
                 } else {
+                    if(!user.equals("sunlights035")){
+                        return Done.apply(ok(login.render("")).toScala(), null);
+                    }
                     return next.apply(rh);
                 }
 
