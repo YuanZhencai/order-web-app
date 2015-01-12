@@ -151,7 +151,7 @@ public class OrderInfoController extends Controller {
         try {
             String createTime = getCreateTimeStr();
             String fileName = "订餐明细"+ createTime +".xls";
-            String path = "C:\\Users\\Administrator\\Desktop\\";
+            String path = "D:";
             if(path == null){
                 Logger.info(">>>>>>>>exportOrderListDetail  cancel");
                 return ok();
