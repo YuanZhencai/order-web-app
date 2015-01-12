@@ -9,6 +9,8 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
     $scope.isNotInit = true;
     $scope.pageUrl = "/findOrderInfo";
     new PageService($scope, $http, $timeout);
+    $scope.alertFlag = false;
+
     $scope.editRow = function (row) {
         $scope.open(row);
 
@@ -26,9 +28,22 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
         console.debug("findResult()");
         return OrderService.exportDailyTotal($scope.pager).then((function (data) {
             console.debug("Promise returned " + data.length + " banks");
+
+            $scope.alertFlag = true;
+            $scope.msg = data.data;
+            $scope.alertClass = "alert-warning";
+            $timeout(function(){
+                $scope.alertFlag = false;
+            }, [2000], []);
+
         }), function (error) {
             console.error("Unable to get activities: " + error);
-            $scope.error = error;
+            $scope.alertFlag = true;
+            $scope.msg = error.data;
+            $scope.alertClass = "alert-danger";
+            $timeout(function(){
+                $scope.alertFlag = false;
+            }, [2000], []);
         });
     };
 
@@ -36,9 +51,20 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
         console.debug("findResult()");
         return OrderService.exportDailyDetail($scope.pager).then((function (data) {
             console.debug("Promise returned " + data.length + " banks");
+            $scope.alertFlag = true;
+            $scope.msg = data.data;
+            $scope.alertClass = "alert-warning";
+            $timeout(function(){
+                $scope.alertFlag = false;
+            }, [2000], []);
         }), function (error) {
             console.error("Unable to get activities: " + error);
-            $scope.error = error;
+            $scope.alertFlag = true;
+            $scope.msg = error.data;
+            $scope.alertClass = "alert-danger";
+            $timeout(function(){
+                $scope.alertFlag = false;
+            }, [2000], []);
         });
     };
 

@@ -8,6 +8,10 @@
     </div>
     <div class="row">
         <div class="form-group">
+            <div ng-show="alertFlag">
+                <br>
+                <alert class="{{alertClass}}" close="removeAlert()">{{msg}}</alert>
+            </div>
             <form class="form-inline" role="form" name="myForm">
             <label class="control-label">对账日期：</label>
             <input name="createTime" ng-enter="uc.findResult()" ui-date

@@ -127,14 +127,14 @@ public class OrderInfoController extends Controller {
         try {
             String createTime = getCreateTimeStr();
             String fileName = "订餐清单"+ createTime +".xls";
-            String path = getSelectedFolderPath(fileName);
+            String path = "C:\\Users\\Administrator\\Desktop\\";
             if(path == null){
                 Logger.info(">>>>>>>>exportDailyOrderListTotal  cancel");
                 return ok();
             }
             exportToExcelForTotal(createTime, fileName, path);
             Logger.info(">>>>>>>>exportDailyOrderListTotal  end");
-            return ok();
+            return ok("导出成功，已保存到桌面。");
         } catch (Exception e) {
             Logger.error("exportDailyOrderListTotal error：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
@@ -151,14 +151,14 @@ public class OrderInfoController extends Controller {
         try {
             String createTime = getCreateTimeStr();
             String fileName = "订餐明细"+ createTime +".xls";
-            String path = getSelectedFolderPath(fileName);
+            String path = "C:\\Users\\Administrator\\Desktop\\";
             if(path == null){
                 Logger.info(">>>>>>>>exportOrderListDetail  cancel");
                 return ok();
             }
             exportToExcelForDetail(createTime, fileName, path);
             Logger.info(">>>>>>>>exportOrderListDetail  end");
-            return ok();
+            return ok("导出成功，已保存到桌面。");
         } catch (Exception e) {
             Logger.error("exportOrderListDetail error：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
