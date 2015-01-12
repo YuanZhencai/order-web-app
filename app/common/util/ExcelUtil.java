@@ -16,10 +16,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import play.Logger;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -52,19 +49,18 @@ public class ExcelUtil {
         return readXlsx(file, xlsDto);
     }
 
+
     /**
      * 导出Excel
      *
      * @param excelDemoVo
      */
-    public static void exportExcel(ExcelDemoVo excelDemoVo) {
+    public static File exportExcel(ExcelDemoVo excelDemoVo) throws Exception{
 
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
         ExcelHeader header = excelDemoVo.getHeader();
         ExcelContainer container = excelDemoVo.getContainer();
         ExcelFooter footer = excelDemoVo.getFooter();
-
-
-
         // 第一步，创建一个webbook，对应一个Excel文件
         HSSFWorkbook wb = new HSSFWorkbook();
         // 第二步，在webbook中添加一个sheet,对应Excel文件中的sheet
@@ -138,13 +134,20 @@ public class ExcelUtil {
             }
         }
         // 第六步，将文件存到指定位置
+        File file = null;
+        BufferedOutputStream stream = null;
         try {
-            FileOutputStream fout = new FileOutputStream(excelDemoVo.getFileName());
-            wb.write(fout);
-            fout.close();
+            wb.write(bos);
+            file = new File(excelDemoVo.getFileName());
+            FileOutputStream fstream= new FileOutputStream(file);
+            stream = new BufferedOutputStream(fstream);
+            wb.write(stream);
         } catch (Exception e) {
             e.printStackTrace();
+        }finally {
+            stream.close();
         }
+        return file;
     }
 
 

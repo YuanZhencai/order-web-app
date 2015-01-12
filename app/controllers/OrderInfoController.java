@@ -2,7 +2,8 @@ package controllers;
 
 import common.util.CommonUtil;
 import common.util.ExcelUtil;
-import common.vo.*;
+import common.vo.ExcelDemoVo;
+import common.vo.PageVo;
 import org.apache.commons.beanutils.BeanUtils;
 import play.Logger;
 import play.db.jpa.Transactional;
@@ -15,7 +16,10 @@ import vo.OrderInfoVo;
 
 import javax.swing.*;
 import java.io.File;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by guxuelong on 2014/12/27.
@@ -132,9 +136,11 @@ public class OrderInfoController extends Controller {
                 Logger.info(">>>>>>>>exportDailyOrderListTotal  cancel");
                 return ok();
             }
-            exportToExcelForTotal(createTime, fileName, path);
+            response().setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response().setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
+            File chunks = exportToExcelForTotal(createTime, fileName, path);
             Logger.info(">>>>>>>>exportDailyOrderListTotal  end");
-            return ok("导出成功，已保存到桌面。");
+            return ok(chunks);
         } catch (Exception e) {
             Logger.error("exportDailyOrderListTotal error：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
@@ -151,14 +157,16 @@ public class OrderInfoController extends Controller {
         try {
             String createTime = getCreateTimeStr();
             String fileName = "订餐明细"+ createTime +".xls";
-            String path = "D:";
+            String path = "C:\\Users\\Administrator\\Desktop\\";
             if(path == null){
                 Logger.info(">>>>>>>>exportOrderListDetail  cancel");
                 return ok();
             }
-            exportToExcelForDetail(createTime, fileName, path);
+            response().setContentType("application/vnd.ms-excel;charset=UTF-8");
+            response().setHeader("Content-Disposition", "attachment;filename=" + fileName + ".xls");
+            File chunks =  exportToExcelForDetail(createTime, fileName, path);
             Logger.info(">>>>>>>>exportOrderListDetail  end");
-            return ok("导出成功，已保存到桌面。");
+            return ok(chunks);
         } catch (Exception e) {
             Logger.error("exportOrderListDetail error：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
@@ -177,20 +185,20 @@ public class OrderInfoController extends Controller {
         }
         return path;
     }
-    private void exportToExcelForTotal(String createTime, String fileName, String path) throws Exception {
+    private  File exportToExcelForTotal(String createTime, String fileName, String path) throws Exception {
         // query order list to set exportVo
         ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
         excelDemoVo.setFileName(path + "\\" + fileName);
         // export order list to excel
-        ExcelUtil.exportExcel(excelDemoVo);
+        return ExcelUtil.exportExcel(excelDemoVo);
     }
 
-    private void exportToExcelForDetail(String createTime, String fileName, String path) throws Exception {
+    private File exportToExcelForDetail(String createTime, String fileName, String path) throws Exception {
         // query order list to set exportVo
         ExcelDemoVo excelDemoVo = service.queryDailyOrderDetail(createTime);
         excelDemoVo.setFileName(path + "\\" + fileName);
         // export order list to excel
-        ExcelUtil.exportExcel(excelDemoVo);
+        return ExcelUtil.exportExcel(excelDemoVo);
     }
 
     private String getCreateTimeStr() throws Exception {

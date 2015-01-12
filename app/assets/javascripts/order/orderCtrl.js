@@ -30,7 +30,7 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
             console.debug("Promise returned " + data.length + " banks");
 
             $scope.alertFlag = true;
-            $scope.msg = data.data;
+            $scope.msg = "文件导出成功，已导出至桌面。";
             $scope.alertClass = "alert-warning";
             $timeout(function(){
                 $scope.alertFlag = false;
@@ -52,7 +52,7 @@ var OrderCtrl = function($modal,$scope,$http,$timeout,$location,OrderService) {
         return OrderService.exportDailyDetail($scope.pager).then((function (data) {
             console.debug("Promise returned " + data.length + " banks");
             $scope.alertFlag = true;
-            $scope.msg = data.data;
+            $scope.msg = "文件导出成功，已导出至桌面。";
             $scope.alertClass = "alert-warning";
             $timeout(function(){
                 $scope.alertFlag = false;
