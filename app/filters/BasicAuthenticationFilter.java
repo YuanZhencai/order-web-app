@@ -8,6 +8,7 @@ import play.api.mvc.RequestHeader;
 import play.api.mvc.Result;
 import play.data.Form;
 import scala.Option;
+import scala.Some;
 import views.html.login;
 import views.html.orderLogin;
 import vo.OrderUserVo;
@@ -47,7 +48,7 @@ public class BasicAuthenticationFilter implements EssentialFilter {
                     }
                     return Done.apply(ok(login.render("")).toScala(), null);
                 } else {
-                    if(!user.equals("sunlights035")){
+                    if(!user.equals(new Some<String>("sunlights035"))){
                         return Done.apply(ok(login.render("")).toScala(), null);
                     }
                     return next.apply(rh);
