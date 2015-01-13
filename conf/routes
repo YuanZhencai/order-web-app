@@ -29,6 +29,7 @@ POST        /deleteMenuInfo            @controllers.MenuInfoController.delete
 # order
 POST        /findFood                  @controllers.MenuInfoController.findAll
 POST        /findOrderInfo             @controllers.OrderInfoController.findAll
+POST        /findByUser                @controllers.OrderInfoController.findByUser
 POST        /addOrderInfo              @controllers.OrderInfoController.add
 POST        /updateOrderInfo           @controllers.OrderInfoController.update
 POST        /deleteOrderInfo           @controllers.OrderInfoController.delete

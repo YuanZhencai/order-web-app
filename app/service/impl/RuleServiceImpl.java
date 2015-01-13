@@ -35,6 +35,23 @@ public class RuleServiceImpl implements RuleService {
     }
 
     /**
+     * 查询指定规则列表
+     *
+     * @return
+     */
+    @Override
+    public List<RuleVo> findByType(String type) throws Exception {
+        List<Rule> ruleList = dao.findByType(type);
+        List<RuleVo> resultList = new ArrayList<>();
+        for (Rule rule : ruleList) {
+            RuleVo vo = new RuleVo();
+            BeanUtils.copyProperties(vo,rule);
+            resultList.add(vo);
+        }
+        return resultList;
+    }
+
+    /**
      * 添加新规则
      *
      * @param ruleVo

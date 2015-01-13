@@ -8,8 +8,8 @@
         <meta name="author" content="">
         <base href="../">
         <title>艺岳订餐</title>
-        <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/style.css")'>
         <link rel="stylesheet" media='screen' href='@routes.WebJarAssets.at(WebJarAssets.locate("jquery-ui.css"))'>
+        <link rel="stylesheet" media='screen' href='@routes.Assets.at("stylesheets/style.css")'>
     </head>
     <body class="index_page">
         <body class="index_page"  ng-controller="OrderDinnerCtrl as oc">
@@ -32,7 +32,7 @@
                         欢迎光临本店，
                             <span ng-hide="orderInfo.loginFlg">请<a href="" ng-click="oc.tologin()">登录</a></span>
 
-                            <span ng-show="orderInfo.loginFlg">{{orderInfo.userName}} | <a href="" ng-click="oc.logout()">注销</a></span>
+                            <span ng-show="orderInfo.loginFlg">{{orderInfo.userName}} | <a href="" ng-click="oc.myOrder()">我的订单</a>| <a href="" ng-click="oc.logout()">注销</a></span>
 
                         </font>
                     </div>
@@ -66,6 +66,10 @@
                 </div>
 
                 <div class="block clearfix" style="margin-top : 10px;"  ng-show="orderInfo.showList">
+                    <div ng-show="alertFlag">
+                        <br>
+                        <alert class="alert-danger">{{orderInfo.error}}</alert>
+                    </div>
                     <div>
                         <div class="sale_box clearfix">
                             <div class="tit"><span>15元套餐</span></div>
@@ -218,6 +222,10 @@
                     </div>
                 </div>
                 <div class="block table " ng-show="orderInfo.showCart">
+                    <div ng-show="alertFlag">
+                        <br>
+                        <alert class="alert-danger">{{orderInfo.error}}</alert>
+                    </div>
                     <div class="flowBox">
                         <h6><span>商品列表</span></h6>
                         <form id="formCart" name="formCart" method="post" action="flow.php">
@@ -277,7 +285,62 @@
                     </div>
                 </div>
 
+                <div class="block table " ng-show="orderInfo.myOrder">
+                    <div ng-show="alertFlag">
+                        <br>
+                        <alert class="alert-danger">{{orderInfo.error}}</alert>
+                    </div>
+                    <div class="flowBox">
+                        <h6><span>我的订单</span></h6>
+                        <form id="formCart" name="formCart" method="post" action="flow.php">
+                            <table width="99%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
+                                <tbody>
+                                    <tr>
+                                        <th bgcolor="#ffffff">订单号</th>
+                                        <th bgcolor="#ffffff">菜肴名</th>
+                                        <th bgcolor="#ffffff">价格</th>
+                                        <th bgcolor="#ffffff">饭店名</th>
+                                        <th bgcolor="#ffffff">订餐时间</th>
+                                        <th bgcolor="#ffffff">操作</th>
+                                    </tr>
+                                    <tr ng-repeat="order in orderInfo.orders">
+                                        <td bgcolor="#ffffff" align="center" style="width:300px;">
+                                            <a href="goods.php?id=214" target="_blank"><img style="width:80px; height:80px;" src="" border="0" title="泰国龙眼2斤装"></a><br>
+                                            <a href="goods.php?id=214" target="_blank" class="f6">{{order.id}}</a>
+                                        </td>
+                                        <td bgcolor="#ffffff">{{order.foodName}}</td>
+                                        <td align="center" bgcolor="#ffffff">{{order.priceStr}}元</td>
+                                        <td align="center" bgcolor="#ffffff">{{order.source}}</td>
+                                        <td align="center" bgcolor="#ffffff">
+                                            {{order.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                                        </td>
+                                        <td align="center" bgcolor="#ffffff">
+                                            <a href="" ng-click="oc.deleteOrder(order)" class="f6" ng-show="oc.showOption(order)">取消订单</a>
+                                        </td>
+                                    </tr>
+                                    <tr ng-hide="orderInfo.orders.length">
+                                        <td colspan="7">
+                                            <p class="text-center">你还没有点过餐！</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </form>
+                        <table width="99%" align="center" border="0" cellpadding="5" cellspacing="0" bgcolor="#dddddd">
+                            <tbody><tr>
+                                <td bgcolor="#ffffff"><a href="" ng-click="oc.hideCart()"><img src="assets/images/continue.gif" alt="continue"></a></td>
+                                <td bgcolor="#ffffff" align="right"><a href="" ng-click="oc.confirmOrder()"><img src="assets/images/checkout.gif" alt="checkout"></a></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
                 <div class="block table " ng-show="orderInfo.showLogin">
+                    <div ng-show="alertFlag">
+                        <br>
+                        <alert class="alert-danger">{{orderInfo.error}}</alert>
+                    </div>
                     <div class="flowBox" style="border : none ; border-top : 1px solid #ddd">
                         <table width="100%" align="center" border="0" cellpadding="5" cellspacing="1" bgcolor="#dddddd">
                             <tbody><tr>

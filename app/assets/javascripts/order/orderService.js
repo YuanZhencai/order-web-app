@@ -82,6 +82,34 @@ var OrderService = function ($http, $q) {
         return deferred.promise;
     };
 
+    OrderService.prototype.myOrder = function () {
+        var deferred;
+        console.debug("orderService.myOrder()");
+        deferred = $q.defer();
+        $http.post("/findByUser").then(function (data) {
+            console.info("Successfully findByUser");
+            return deferred.resolve(data);
+        }, function (data, status) {
+            console.error("Failed to findByUser" + status);
+            return deferred.reject(data);
+        });
+        return deferred.promise;
+    };
+
+    OrderService.prototype.delete = function (order) {
+        var deferred;
+        console.debug("orderService.delete()");
+        deferred = $q.defer();
+        $http.post("/deleteOrderInfo", order).then(function (data) {
+            console.info("Successfully delete order");
+            return deferred.resolve(data);
+        }, function (data, status) {
+            console.error("Failed to delete order" + status);
+            return deferred.reject(data);
+        });
+        return deferred.promise;
+    };
+
     OrderService.prototype.exportDailyTotal = function (pager) {
         var deferred;
         console.debug("OrderService()");

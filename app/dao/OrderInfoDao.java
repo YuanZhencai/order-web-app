@@ -18,6 +18,8 @@ public interface OrderInfoDao {
 
     public List<OrderInfo>findOrderByUserName(String createTime);
 
+    public List<OrderInfo> queryOrderListByUser(String userId);
+
     public List<OrderInfo> findSubset(int start, int end);
 
     public OrderInfo findById(Long id);

@@ -43,6 +43,29 @@ public class OrderInfoServiceImpl implements OrderInfoService {
     }
 
     /**
+     * 查询制定用户的订单列表
+     *
+     * @return
+     */
+    @Override
+    public List<OrderInfoVo> findByUser(String userId) throws Exception {
+        List<OrderInfo> list = dao.queryOrderListByUser(userId);
+        List<OrderInfoVo> voList = new ArrayList<>();
+        int count = 0;
+        for (OrderInfo orderInfos : list) {
+            count++;
+            OrderInfoVo orderInfoVo = new OrderInfoVo();
+            BeanUtils.copyProperties(orderInfoVo, orderInfos);
+            voList.add(orderInfoVo);
+            if(count > 4){
+                break;
+            }
+        }
+        return voList;
+    }
+
+
+    /**
      * 获取当日订餐清单
      *
      * @param createTime

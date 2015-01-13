@@ -57,6 +57,12 @@ public class RuleDaoImpl extends EntityBaseDao implements RuleDao{
     }
 
     @Override
+    public List<Rule> findByType(String type) {
+
+        return findBy(Rule.class,"ruleType",type);
+    }
+
+    @Override
     public Rule findByTK(Rule rule) {
         Query query = super.createQuery(QUERY_RULE);
         query.setParameter("ruleType",rule.getRuleType());

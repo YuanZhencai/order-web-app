@@ -20,6 +20,7 @@ public class OrderInfoVo {
     private String createBy;
     private Date updateTime;
     private String updateBy;
+    private String canBeToDel = "N";
 
     public String getUserId() {
         return userId;
@@ -124,4 +125,11 @@ public class OrderInfoVo {
         this.price = new BigDecimal(priceStr);
     }
 
+    public String getCanBeToDel() {
+        return canBeToDel;
+    }
+
+    public void setCanBeToDel(String canBeToDel) {
+        this.canBeToDel = canBeToDel;
+    }
 }

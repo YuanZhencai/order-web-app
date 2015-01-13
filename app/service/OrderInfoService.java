@@ -18,6 +18,13 @@ public interface OrderInfoService {
     public List<OrderInfoVo> findAll(String createTime) throws Exception;
 
     /**
+     * 查询制定用户的订单列表
+     *
+     * @return
+     */
+    public List<OrderInfoVo> findByUser(String userId) throws Exception;
+
+    /**
      * 获取当日订餐清单
      *
      * @return

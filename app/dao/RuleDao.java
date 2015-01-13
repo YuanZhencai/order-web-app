@@ -20,6 +20,8 @@ public interface RuleDao {
 
     public Rule findById(Long id);
 
+    public List<Rule> findByType(String type);
+
     public Rule findByTK(Rule rule);
 
     public int num();

@@ -7,10 +7,13 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
         showCart : false,
         showList :true,
         showLogin : false,
+        myOrder : false,
         foods : [],
         userName: "",
         loginFlg : false,
-        orgFlg : false
+        orgFlg : false,
+        alertFlag:false,
+        error:""
     };
     var localData = localStorage.getItem("orderInfo");
     if(localData){
@@ -27,10 +30,31 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
         }
     }, true);
 
+    OrderDinnerCtrl.prototype.myOrder = function () {
+        return OrderService.myOrder().then((function (data) {
+            $scope.orderInfo.showLogin = false;
+            $scope.orderInfo.showCart = false;
+            $scope.orderInfo.showList = false;
+            $scope.orderInfo.myOrder = true;
+            $scope.orderInfo.orders = data.data.list;
+        }), function (error) {
+            console.error("find myOrderList error: " + error.data);
+            showError(error);
+        });
+    };
+
+    OrderDinnerCtrl.prototype.showOption = function (order) {
+        if(order.canBeToDel === "Y"){
+            return true;
+        }
+        return false;
+    };
+
     OrderDinnerCtrl.prototype.tologin = function () {
         $scope.orderInfo.orgFlg = $scope.orderInfo.showList;
         $scope.orderInfo.showCart = false;
         $scope.orderInfo.showList = false;
+        $scope.orderInfo.myOrder = false;
         $scope.orderInfo.showLogin = true;
     };
 
@@ -66,16 +90,18 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
             $scope.orderInfo.showLogin = false;
             $scope.orderInfo.showCart = true;
             $scope.orderInfo.showList = false;
+            $scope.orderInfo.myOrder = false;
             if($scope.orderInfo.orgFlg){
                 $scope.orderInfo.showCart = false;
                 $scope.orderInfo.showList = true;
+                $scope.orderInfo.myOrder = false;
             }
 
         }), function (error) {
             $scope.orderInfo.loginFlg = false;
             $scope.orderInfo.userName = "";
             console.error("Unable to get activities: " + error);
-            $scope.orderInfo.error = error;
+            showError(error);
         });
     };
 
@@ -135,15 +161,17 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
         if (confirm('您确实要提交订单吗？')) {
             $scope.pager.list = $scope.orderInfo.foods;
             OrderService.add($scope.pager).then(function (data) {
-                console.info("add to userInfo successfully : " + data);
+                console.info("confirm order successfully : " + data);
+                $scope.orderInfo.count = 0;
+                $scope.orderInfo.foods = [];
+                $scope.orderInfo.orgPrice = 0;
+                $scope.orderInfo.salePrice = 0;
             }, function (error) {
-                console.error("update to userInfo error : " + error.data);
+                showError(error);
+                console.error("confirm order error : " + error.data);
             });
 
-            $scope.orderInfo.count = 0;
-            $scope.orderInfo.foods = [];
-            $scope.orderInfo.orgPrice = 0;
-            $scope.orderInfo.salePrice = 0;
+
         }
     };
 
@@ -151,12 +179,14 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
         $scope.orderInfo.showCart = true;
         $scope.orderInfo.showList = false;
         $scope.orderInfo.showLogin = false;
+        $scope.orderInfo.myOrder = false;
     };
 
     OrderDinnerCtrl.prototype.hideCart = function () {
         $scope.orderInfo.showCart = false;
         $scope.orderInfo.showList = true;
         $scope.orderInfo.showLogin = false;
+        $scope.orderInfo.myOrder = false;
     };
 
 
@@ -168,11 +198,31 @@ var OrderDinnerCtrl = function ($modal,$cacheFactory, $scope, $http, $timeout, $
             $scope.pager = data.data;
             $scope.orderInfo.results = data.data.list;
         }), function (error) {
+            showError(error);
             console.error("Unable to get activities: " + error);
             $scope.orderInfo.error = error;
         });
     };
 
+    OrderDinnerCtrl.prototype.deleteOrder = function (row) {
+        OrderService.delete(row).then(function (data) {
+            console.info("delete to userInfo successfully : " + data);
+            $scope.orderInfo.orders.splice(row.rowIndex,1);
+        }, function (error) {
+            showError(error);
+            console.error("delete to userInfo error : " + error.data);
+        });
+    };
+    $scope.removeAlert = function () {
+        $scope.alertFlag = false;
+    };
+    function showError(error){
+        $scope.orderInfo.error = error.data;
+        $scope.alertFlag = true;
+        $timeout(function(){
+            $scope.alertFlag = false;
+        }, [2000], []);
+    }
 };
 
 controllersModule.controller('OrderDinnerCtrl', OrderDinnerCtrl);

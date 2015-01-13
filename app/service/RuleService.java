@@ -16,6 +16,14 @@ public interface RuleService {
      */
     public List<RuleVo> findAll() throws Exception;
 
+
+    /**
+     * 查询指定规则列表
+     *
+     * @return
+     */
+    public List<RuleVo> findByType(String type) throws Exception;
+
     /**
      * 添加新规则
      *

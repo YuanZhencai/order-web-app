@@ -58,7 +58,7 @@ public class RuleController extends Controller {
     }
 
     /**
-     * 添加新订单
+     * 添加新规则
      *
      * @return
      */
@@ -75,7 +75,7 @@ public class RuleController extends Controller {
 
 
     /**
-     * 更新订单信息
+     * 更新规则信息
      *
      * @return
      */
@@ -91,7 +91,7 @@ public class RuleController extends Controller {
     }
 
     /**
-     * 删除订单信息（逻辑删除）
+     * 删除规则信息（逻辑删除）
      *
      * @return
      */

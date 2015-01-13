@@ -6,14 +6,19 @@ import common.vo.ExcelDemoVo;
 import common.vo.PageVo;
 import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.beanutils.ConvertUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
 import play.Logger;
 import play.db.jpa.Transactional;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import service.OrderInfoService;
+import service.RuleService;
 import service.impl.OrderInfoServiceImpl;
+import service.impl.RuleServiceImpl;
 import vo.OrderInfoVo;
+import vo.RuleVo;
 
 import java.io.File;
 import java.util.*;
@@ -28,7 +33,7 @@ public class OrderInfoController extends Controller {
 
     private static final String SYSTEM_ERROR = "系统异常，请联系后台服务维护人员！";
     private OrderInfoService service = new OrderInfoServiceImpl();
-
+    private RuleService ruleService = new RuleServiceImpl();
 
     /**
      * 查询订单信息列表
@@ -39,6 +44,35 @@ public class OrderInfoController extends Controller {
         try {
             PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
             List<OrderInfoVo> list = service.findAll(getDateString(pageVo));
+            PageVo vo = new PageVo();
+            vo.setList(list);
+            return ok(Json.toJson(vo));
+        } catch (Exception e) {
+            Logger.error("订单信息查询失败；错误信息：" + e.getMessage());
+            return Controller.badRequest(SYSTEM_ERROR);
+        }
+
+    }
+
+
+    /**
+     * 查询订单信息列表
+     *
+     * @return
+     */
+    public Result  findByUser() {
+        try {
+            setEndTimeToSession();
+            String user = session().get("user");
+            if(StringUtils.isEmpty(user) || "sunlights035".equals(user)){
+                return Controller.badRequest("登录超时，请重新登录！");
+            }
+            List<OrderInfoVo> list = service.findByUser(user);
+            for (OrderInfoVo orderInfoVo : list) {
+                if(canBeToDelete(orderInfoVo.getCreateTime())){
+                    orderInfoVo.setCanBeToDel("Y");
+                }
+            }
             PageVo vo = new PageVo();
             vo.setList(list);
             return ok(Json.toJson(vo));
@@ -70,13 +104,17 @@ public class OrderInfoController extends Controller {
      */
     public Result add() {
         try {
+            String user = session().get("user");
+            if(StringUtils.isEmpty(user) || "sunlights035".equals(user)){
+                return Controller.badRequest("登录超时，请重新登录！");
+            }
             PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
             List<Map> orderInfoVoList = pageVo.getList();
             for (Map map : orderInfoVoList) {
                 OrderInfoVo orderInfoVo = new OrderInfoVo();
                 BeanUtils.copyProperties(orderInfoVo, map);
                 orderInfoVo.setId(null);
-                orderInfoVo.setUserId(session().get("user"));
+                orderInfoVo.setUserId(user);
                 orderInfoVo.setUserName(session().get("userName"));
                 service.add(orderInfoVo);
             }
@@ -110,14 +148,57 @@ public class OrderInfoController extends Controller {
      * @return
      */
     public Result delete() {
+
         try {
+            setEndTimeToSession();
             OrderInfoVo orderInfoVo = Json.fromJson(request().body().asJson(), OrderInfoVo.class);
+            if(!canBeToDelete(orderInfoVo.getCreateTime())){
+                return Controller.badRequest("订单不可修改");
+            }
             service.delete(orderInfoVo);
             return ok();
         } catch (Exception e) {
             Logger.error("订单信息删除失败；错误信息：" + e.getMessage());
             return Controller.badRequest(SYSTEM_ERROR);
         }
+    }
+
+    private void setEndTimeToSession() throws Exception {
+        if(session().get("Lunch") == null || session().get("Dinner") == null){
+            List<RuleVo> rules = ruleService.findByType("EndTime");
+            for (RuleVo rule : rules) {
+                session().put(rule.getRuleKey(),rule.getRuleValue());
+            }
+        }
+    }
+
+    private boolean canBeToDelete(Date createTime){
+        DateTime dateTime = new DateTime();
+        StringBuilder strBuilder = new StringBuilder();
+        strBuilder.append(dateTime.getYear());
+        strBuilder.append(dateTime.getMonthOfYear());
+        strBuilder.append(dateTime.getDayOfMonth());
+
+        DateTime createTimeDt = new DateTime(createTime);
+        StringBuilder createTimeStr = new StringBuilder();
+        createTimeStr.append(createTimeDt.getYear());
+        createTimeStr.append(createTimeDt.getMonthOfYear());
+        createTimeStr.append(createTimeDt.getDayOfMonth());
+
+        if(!strBuilder.toString().equals(createTimeStr.toString())){
+            return false;
+        }
+        int hour = dateTime.getHourOfDay();
+        String lunchEndTime = session().get("Lunch");
+        String dinnerEndTime = session().get("Dinner");
+        if(hour > Integer.valueOf(dinnerEndTime)){
+            return false;
+        }
+
+        if(hour > Integer.valueOf(lunchEndTime)  && createTimeDt.getHourOfDay() < Integer.valueOf(lunchEndTime)){
+            return false;
+        }
+        return true;
     }
 
     /**
