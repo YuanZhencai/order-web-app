@@ -393,27 +393,27 @@
                                             <tbody>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right" width="25%"><strong>用户名</strong></td>
-                                                    <td bgcolor="#ffffff"><input name="userId" type="text" class="inputBg input-left" ng-model="userInfo.userId" id="userId" required><br>
-                                                    <span id="orderInfo.userName_notice" style="color : #FF0000"></span></td>
+                                                    <td bgcolor="#ffffff" style="text-align: left;"><input name="userId" type="text" class="inputBg input-left" ng-model="userInfo.userId" id="userId" required>
+                                                        <span id="orderInfo.userName_notice" style="margin-left: 10px;color : #1600FF">*用户由英文字母、数字、下划线组成</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right" width="25%"><strong>姓名</strong></td>
-                                                    <td bgcolor="#ffffff"><input name="userName" type="text" class="inputBg input-left" ng-model="userInfo.userName" id="userName" required><br>
-                                                        <span id="orderInfo.userName_notice" style="color : #FF0000"></span></td>
+                                                    <td bgcolor="#ffffff" style="text-align: left;"><input name="userName" type="text" class="inputBg input-left" ng-model="userInfo.userName" id="userName" required>
+                                                        <span id="orderInfo.userName_notice" style="margin-left: 10px;color : #1600FF">*请输入您的中文名</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right"><strong>电子邮件地址</strong></td>
-                                                    <td bgcolor="#ffffff"><input name="email" type="email" class="inputBg input-left" ng-model="userInfo.email" id="email" required><br>
-                                                        <span id="email_notice" style="color : #FF0000" ng-show="myForm.email.$error.email"></span></td>
+                                                    <td bgcolor="#ffffff" style="text-align: left;"><input name="email" type="email" class="inputBg input-left" ng-model="userInfo.email" id="email" required>
+                                                        <span id="orderInfo.userName_notice"  style="margin-left: 10px;color : #1600FF">*请输入您的公司邮箱</span></td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right"><strong>密码</strong></td>
-                                                    <td bgcolor="#ffffff"><input name="password" class="inputBg input-left" ng-model="userInfo.password" type="password" id="password1" required><br>
+                                                    <td bgcolor="#ffffff"><input name="password" class="inputBg input-left" ng-model="userInfo.password" type="password" id="password1" required>
                                                         <span style="color : #FF0000" id="password_notice"></span></td>
                                                 </tr>
                                                 <tr>
                                                     <td bgcolor="#ffffff" align="right"><strong>确认密码</strong></td>
-                                                    <td bgcolor="#ffffff"><input name="confirm_password" class="inputBg input-left" ng-model="userInfo.passwordConfirm" type="password" id="confirm_password" required><br>
+                                                    <td bgcolor="#ffffff"><input name="confirm_password" class="inputBg input-left" ng-model="userInfo.passwordConfirm" type="password" id="confirm_password" required>
                                                         <span style="color : #FF0000" id="conform_password_notice"></span></td>
                                                 </tr>
                                                 @*<tr>*@
