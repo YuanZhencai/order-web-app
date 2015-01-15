@@ -21,6 +21,7 @@ import vo.OrderInfoVo;
 import vo.RuleVo;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 import static play.data.Form.form;
@@ -60,16 +61,16 @@ public class OrderInfoController extends Controller {
      *
      * @return
      */
-    public Result  findByUser() {
+    public Result findByUser() {
         try {
             setEndTimeToSession();
             String user = session().get("user");
-            if(StringUtils.isEmpty(user) || "sunlights035".equals(user)){
+            if (StringUtils.isEmpty(user) || "sunlights035".equals(user)) {
                 return Controller.badRequest("登录超时，请重新登录！");
             }
             List<OrderInfoVo> list = service.findByUser(user);
             for (OrderInfoVo orderInfoVo : list) {
-                if(canBeToDelete(orderInfoVo.getCreateTime())){
+                if (canBeToDelete(orderInfoVo.getCreateTime())) {
                     orderInfoVo.setCanBeToDel("Y");
                 }
             }
@@ -104,18 +105,24 @@ public class OrderInfoController extends Controller {
      */
     public Result add() {
         try {
+
             String user = session().get("user");
-            if(StringUtils.isEmpty(user) || "sunlights035".equals(user)){
+            // 用户登录信息校验
+            if (StringUtils.isEmpty(user) || "sunlights035".equals(user)) {
                 return Controller.badRequest("登录超时，请重新登录！");
             }
+            // 获取设置订餐截止时间
+            setEndTimeToSession();
+
+            // 订餐时间控制
+            if (!isOrderTime()) {
+                return Controller.badRequest(getEndTimeError());
+            }
+
             PageVo pageVo = Json.fromJson(request().body().asJson(), PageVo.class);
             List<Map> orderInfoVoList = pageVo.getList();
             for (Map map : orderInfoVoList) {
-                OrderInfoVo orderInfoVo = new OrderInfoVo();
-                BeanUtils.copyProperties(orderInfoVo, map);
-                orderInfoVo.setId(null);
-                orderInfoVo.setUserId(user);
-                orderInfoVo.setUserName(session().get("userName"));
+                OrderInfoVo orderInfoVo = getOrderInfoVo(user, map);
                 service.add(orderInfoVo);
             }
             return ok();
@@ -125,6 +132,41 @@ public class OrderInfoController extends Controller {
         }
     }
 
+    private String getEndTimeError() {
+        String errorMsg = null;
+        String lunchEndTime = session().get("Lunch");
+        int endTime = Integer.valueOf(lunchEndTime) + 2;
+        if (new DateTime().getHourOfDay() <= endTime) {
+            errorMsg = "请在" + lunchEndTime + "时之前订餐！";
+        } else {
+            String dinnerEndTime = session().get("Dinner");
+            errorMsg = "请在" + endTime + "时到" + dinnerEndTime + "时之间订餐！";
+        }
+        return errorMsg;
+    }
+
+    private OrderInfoVo getOrderInfoVo(String user, Map map) throws IllegalAccessException, InvocationTargetException {
+        OrderInfoVo orderInfoVo = new OrderInfoVo();
+        BeanUtils.copyProperties(orderInfoVo, map);
+        orderInfoVo.setId(null);
+        orderInfoVo.setUserId(user);
+        orderInfoVo.setUserName(session().get("userName"));
+        return orderInfoVo;
+    }
+
+
+    private boolean isOrderTime() {
+        DateTime dateTime = new DateTime();
+        if (dateTime.getHourOfDay() < Integer.valueOf(session().get("Lunch"))) {
+            return true;
+        }
+
+        if (dateTime.getHourOfDay() > Integer.valueOf(session().get("Lunch")) + 2
+                && dateTime.getHourOfDay() < Integer.valueOf(session().get("Dinner"))) {
+            return true;
+        }
+        return false;
+    }
 
     /**
      * 更新订单信息
@@ -152,7 +194,7 @@ public class OrderInfoController extends Controller {
         try {
             setEndTimeToSession();
             OrderInfoVo orderInfoVo = Json.fromJson(request().body().asJson(), OrderInfoVo.class);
-            if(!canBeToDelete(orderInfoVo.getCreateTime())){
+            if (!canBeToDelete(orderInfoVo.getCreateTime())) {
                 return Controller.badRequest("订单不可修改");
             }
             service.delete(orderInfoVo);
@@ -164,15 +206,15 @@ public class OrderInfoController extends Controller {
     }
 
     private void setEndTimeToSession() throws Exception {
-        if(session().get("Lunch") == null || session().get("Dinner") == null){
+        if (session().get("Lunch") == null || session().get("Dinner") == null) {
             List<RuleVo> rules = ruleService.findByType("EndTime");
             for (RuleVo rule : rules) {
-                session().put(rule.getRuleKey(),rule.getRuleValue());
+                session().put(rule.getRuleKey(), rule.getRuleValue());
             }
         }
     }
 
-    private boolean canBeToDelete(Date createTime){
+    private boolean canBeToDelete(Date createTime) {
         DateTime dateTime = new DateTime();
         StringBuilder strBuilder = new StringBuilder();
         strBuilder.append(dateTime.getYear());
@@ -185,17 +227,17 @@ public class OrderInfoController extends Controller {
         createTimeStr.append(createTimeDt.getMonthOfYear());
         createTimeStr.append(createTimeDt.getDayOfMonth());
 
-        if(!strBuilder.toString().equals(createTimeStr.toString())){
+        if (!strBuilder.toString().equals(createTimeStr.toString())) {
             return false;
         }
         int hour = dateTime.getHourOfDay();
         String lunchEndTime = session().get("Lunch");
         String dinnerEndTime = session().get("Dinner");
-        if(hour > Integer.valueOf(dinnerEndTime)){
+        if (hour > Integer.valueOf(dinnerEndTime)) {
             return false;
         }
 
-        if(hour > Integer.valueOf(lunchEndTime)  && createTimeDt.getHourOfDay() < Integer.valueOf(lunchEndTime)){
+        if (hour > Integer.valueOf(lunchEndTime) && createTimeDt.getHourOfDay() < Integer.valueOf(lunchEndTime)) {
             return false;
         }
         return true;
@@ -210,7 +252,7 @@ public class OrderInfoController extends Controller {
         Logger.info(">>>>>>>>exportDailyOrderListTotal  start");
         try {
             String createTime = getCreateTimeStr();
-            String fileName = "订餐清单"+ createTime +".xls";
+            String fileName = "订餐清单" + createTime + ".xls";
             setResponse(fileName);
             File chunks = exportToExcelForTotal(createTime, fileName);
             Logger.info(">>>>>>>>exportDailyOrderListTotal  end");
@@ -230,9 +272,9 @@ public class OrderInfoController extends Controller {
         Logger.info(">>>>>>>>exportOrderListDetail  start");
         try {
             String createTime = getCreateTimeStr();
-            String fileName = "订单明细"+ createTime +".xls";
+            String fileName = "订单明细" + createTime + ".xls";
             setResponse(fileName);
-            File chunks =  exportToExcelForDetail(createTime, fileName);
+            File chunks = exportToExcelForDetail(createTime, fileName);
             Logger.info(">>>>>>>>exportOrderListDetail  end");
             return ok(chunks);
         } catch (Exception e) {
@@ -241,13 +283,13 @@ public class OrderInfoController extends Controller {
         }
     }
 
-    private void setResponse(String fileName) throws Exception{
+    private void setResponse(String fileName) throws Exception {
         response().setContentType("application/x-excel;charset=UTF-8");//可选择不同类型
         response().setHeader("Content-Disposition", "attachment;filename=" + java.net.URLEncoder.encode(fileName, "UTF-8"));
 
     }
 
-    private  File exportToExcelForTotal(String createTime, String fileName) throws Exception {
+    private File exportToExcelForTotal(String createTime, String fileName) throws Exception {
         // query order list to set exportVo
         ExcelDemoVo excelDemoVo = service.queryDailyOrderList(createTime);
         excelDemoVo.setFileName(fileName);
@@ -268,9 +310,9 @@ public class OrderInfoController extends Controller {
         Map<String, String> params = form().bindFromRequest().data();
         Iterator iterator = params.keySet().iterator();
         while (iterator.hasNext()) {
-            String key = (String)iterator.next();
+            String key = (String) iterator.next();
             pageVo.put(key, ConvertUtils.convert(params.get(key), String.class));
         }
-        return (String)pageVo.get("createTime");
+        return (String) pageVo.get("createTime");
     }
 }
