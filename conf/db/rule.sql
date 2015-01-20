@@ -1,0 +1,2 @@
+INSERT INTO public.rule (id, rule_type, rule_key, rule_value, del_flg, create_time, create_by, update_time, update_by) VALUES (256662, 'EndTime', 'Dinner', '19', 'N', '2015-01-05 09:52:26.511', 'sunlights', '2015-01-13 15:28:17.983', 'sunlights');
+INSERT INTO public.rule (id, rule_type, rule_key, rule_value, del_flg, create_time, create_by, update_time, update_by) VALUES (256661, 'EndTime', 'Lunch', '10', 'N', '2015-01-05 09:51:26.567', 'sunlights', '2015-01-15 13:47:17.678', 'sunlights');
