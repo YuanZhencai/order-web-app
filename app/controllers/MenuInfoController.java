@@ -28,6 +28,7 @@ public class MenuInfoController extends Controller {
      * @return
      */
     public Result findAll(){
+		Controller.response().setHeader("Access-Control-Allow-Origin","*");
         try{
             List<MenuInfoVo> list =  service.findAll();
             PageVo pageVo = new PageVo();
