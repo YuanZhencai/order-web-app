@@ -1,5 +1,7 @@
 package vo;
 
+import models.MenuInfo;
+
 import java.math.BigDecimal;
 
 /**
@@ -16,7 +18,24 @@ public class MenuInfoVo {
     private BigDecimal count;
     private String picture;
 
-    public Long getId() {
+	public MenuInfoVo () {
+	}
+
+	public MenuInfoVo (MenuInfo menuInfo) {
+		inMenuInfoVo(menuInfo);
+	}
+
+	public void inMenuInfoVo (MenuInfo menuInfo) {
+		this.setFoodId(menuInfo.getFoodId());
+		this.setFoodName(menuInfo.getFoodName());
+		this.setFoodType(menuInfo.getFoodType());
+		this.setSource(menuInfo.getSource());
+		this.setPrice(menuInfo.getPrice());
+		this.setCount(menuInfo.getCount());
+		this.setPicture(menuInfo.getPicture());
+	}
+
+	public Long getId() {
         return id;
     }
 

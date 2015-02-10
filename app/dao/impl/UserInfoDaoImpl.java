@@ -1,6 +1,6 @@
 package dao.impl;
 
-import dao.EntityBaseDao;
+import common.dao.EntityBaseDao;
 import dao.UserInfoDao;
 import models.UserInfos;
 

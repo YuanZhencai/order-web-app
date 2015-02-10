@@ -1,4 +1,4 @@
-package dao;
+package common.dao;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;

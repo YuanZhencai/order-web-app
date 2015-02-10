@@ -1,7 +1,7 @@
 package dao.impl;
 
 import common.util.CommonUtil;
-import dao.EntityBaseDao;
+import common.dao.EntityBaseDao;
 import dao.OrderInfoDao;
 import models.OrderInfo;
 import org.joda.time.DateTime;

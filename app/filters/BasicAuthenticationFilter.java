@@ -37,6 +37,9 @@ public class BasicAuthenticationFilter implements EssentialFilter {
             @Override
             public Iteratee<byte[], Result> apply(RequestHeader rh) {
                 String uri = rh.uri();
+				if(uri.contains("api")) {
+					return next.apply(rh);
+				}
                 if ("/login".equals(uri) || "/addUserInfo".equals(uri) || "/deleteOrderInfo".equals(uri) || "/addOrderInfo".equals(uri) || "/findByUser".equals(uri)
                         || "/order".equals(uri) || "/findFood".equals(uri) || uri.contains("orderLogin") || uri.contains("assets") || uri.contains("webjars")) {
                     return next.apply(rh);
