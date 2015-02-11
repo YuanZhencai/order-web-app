@@ -40,6 +40,7 @@ public enum MsgCode {
     GESTURE_NONE("2111","手势未设置","请先开启手势"),
     CERTIFY_DEVICE_NOT_MATCH("2112","验证码与设备号不匹配", "请重新获取"),
     ACCOUNT_NOT_EXIST("3100","不存在该账户","{0}"),
+	LOGIN_ERROR("2112","登陆失败","用户名密码错误"),
 
 
     TRAD_PASSWORD_RESET_SUCCESS("0200","交易密码重置成功",""),

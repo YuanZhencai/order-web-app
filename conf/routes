@@ -43,7 +43,9 @@ POST        /deleteRule                @controllers.RuleController.delete
 
 
 #====================================================Yuan========================================================
-POST        /api/menus                     @controllers.MenuController.findMenusBy
+POST        /api/menus                 @controllers.MenuController.findMenusBy
+
+POST        /api/login                 @controllers.LoginController.login
 
 
 #====================================================Yuan========================================================
