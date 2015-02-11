@@ -24,7 +24,9 @@ public class LoginController extends Controller {
 			userVo = Json.fromJson(body.asJson(), UserVo.class);
 		}
 		if ("admin".equals(userVo.getUsername()) && "admin".equals(userVo.getPassword())) {
-			messageUtil.setMessage(new Message(Severity.INFO, MsgCode.LOGIN_SUCCESS));
+			userVo.setUsername("admin");
+			userVo.setPassword("admin");
+			messageUtil.setMessage(new Message(Severity.INFO, MsgCode.LOGIN_SUCCESS), userVo);
 		} else {
 			messageUtil.setMessage(new Message(Severity.INFO, MsgCode.LOGIN_ERROR));
 		}
